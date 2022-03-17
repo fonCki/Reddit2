@@ -1,0 +1,19 @@
+img {
+    height: complex;
+    /*width: 100px;*/
+}
+
+.cone {
+    height: 30px;
+}
+
+
+.one {
+    position: fixed;
+    /*background-color: yellow;*/
+    width: 100%;
+}
+
+button {
+    width: 100px;
+}

@@ -1,0 +1,38 @@
+@page "/Create"
+@using Application.Contracts
+@using Entities.Model
+@inject IUserDAO userDao
+<h3>Create</h3>
+
+<div class="col-xl-4 p-3">
+    <RadzenCard>
+        <h2 class="mb-4">Register and password reset</h2>
+        <RadzenTemplateForm Data=@("LoginWithRegisterAndReset")>
+            <RadzenLogin Login=@(args => OnLogin(args, "Login with register and password reset")) 
+                         ResetPassword=@(args => OnResetPassword(args, "Login with register and password reset"))
+                         Register=@(args => OnRegister("Login with register and password reset")) />
+        </RadzenTemplateForm>
+    </RadzenCard>
+</div>
+
+
+
+@code {
+    string userName = "admin";
+    string password = "admin";
+   // EventConsole console;
+
+    void OnLogin(LoginArgs args, string name) {
+        userDao.AddUserAsync(new User(userName, password));
+    }
+
+    void OnRegister(string name)
+    {
+      //  console.Log($"{name} -> Register");
+    }
+
+    void OnResetPassword(string value, string name)
+    {
+      //  console.Log($"{name} -> ResetPassword for user: {value}");
+    }
+}

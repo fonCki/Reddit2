@@ -1,0 +1,56 @@
+
+@inject NavigationManager navMgr
+
+
+<div class="container one">
+    <div class="row">
+        <div class="col-3 my-auto d-flex cone">
+            <img src="images/reddit-1-logo-png-transparent.png" max-width:10px alt="Image">
+        </div>
+        <div class="col-5 text-center cone">
+            <input class="form-control me-2" type="search" placeholder="Search Reddit2" aria-label="Search">
+        </div>
+        @* <div class="col 3"></div> *@
+
+
+        <div class="col-4 text-right cone">
+            <div class="container">
+                <div class="row justify-content-end">
+                        <div class="col-4">
+                            <button type="button" class="btn btn-outline-primary" @onclick="@LogIn">Log In</button>
+                        </div>
+                        <div class="col-4">
+                            <button type="button" class="btn btn-primary">Sign Up</button>
+                        </div>   
+                        <div class="col-4">    
+                            <Dropdown TItem="string" OnSelected="@OnSelected">
+                                <InitialTip>This is a dropdown list</InitialTip>
+                                <ChildContent>
+                                    <DropDownListItem Item="@list[0]">.NET</DropDownListItem>
+                                    <DropDownListItem Item="@list[1]">Python</DropDownListItem>
+                                    <div class="dropdown-divider"></div>
+                                    <DropDownListItem Item="@list[2]">Java</DropDownListItem>
+                                </ChildContent>
+                            </Dropdown>
+                        </div>   
+                    </div>
+            </div>
+</div>
+</div>
+</div>
+    @code {
+        
+     List<string> list = new List<string>{ ".NET", "Python","Java" }; 
+          private void OnSelected(string selection)
+          {
+            Console.WriteLine(selection);
+          }
+
+        private void LogIn() {
+            navMgr.NavigateTo("/LogIn");
+        }
+
+        private void SignUp() {
+            navMgr.NavigateTo("/SignUp");
+        }
+}

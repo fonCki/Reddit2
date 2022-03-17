@@ -1,0 +1,52 @@
+
+
+@page "/pager"
+
+
+    <RadzenDataList WrapItems="true" AllowPaging="false" Data="@orders" TItem="Users">
+        <Template Context="order">
+            <RadzenCard Style="width:300px;">
+                <div class="d-flex flex-row align-items-center">
+                    <RadzenImage Path="https://static.tildacdn.com/tild6433-6337-4534-b937-316163656432/Spirit_island2.JPG" Class="rounded-circle float-left mr-3" Style="width: 80px; height: 80px;" />
+                    <div>
+                        <h4 class="mb-0">hugo</h4>
+                        <div>airliqued</div>
+                        <div style="font-size: .8em">Tandil, Argentina</div>
+                    </div>
+                </div>
+                <hr style="border: none; background-color: rgba(0,0,0,.08); height: 1px; margin: 1rem 0;" />
+                <div class="row">
+                    <div class="col-md-8 text-truncate">
+                        <b>Pepe</b>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <RadzenBadge BadgeStyle="BadgeStyle.Secondary" Text=@($"{String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", 34)}") />
+                    </div>
+                </div>
+            </RadzenCard>
+        </Template>
+    </RadzenDataList>
+<RadzenPager ShowPagingSummary="true" PagingSummaryFormat="@pagingSummaryFormat" HorizontalAlign="HorizontalAlign.Right" Count="count" PageSize="@pageSize" PageNumbersCount="5" PageChanged="@PageChanged" />
+
+@code {
+    string pagingSummaryFormat = "Displaying page {0} of {1} (total {2} records)";
+    int pageSize = 6;
+    int count;
+    IEnumerable<Users> orders;
+
+    protected override void OnInitialized()
+    {
+     //   count = dbContext.Orders.Count();
+     //   orders = GetOrders(0, pageSize);
+    }
+
+    void PageChanged(PagerEventArgs args)
+    {
+     //   orders = GetOrders(args.Skip, args.Top);
+    }
+
+ //   IEnumerable<Order> GetOrders(int skip, int take)
+  //  {
+   //     return dbContext.Orders.Include("Customer").Include("Employee").Skip(skip).Take(take).ToList();
+  //  }
+}

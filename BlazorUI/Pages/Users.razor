@@ -1,0 +1,46 @@
+@page "/Users"
+@using Application.Contracts
+@using Entities.Model
+@inject IUserDAO UserDao
+<h3>Users</h3>
+
+@if (users == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else if (!users.Any())
+{
+    <p>
+        <em>No ToDo items exist. Please add some.</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Owner ID</th> <th>Todo ID</th> <th>Title</th> <th>Completed?</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in users)
+        {
+            <tr>
+                <td>@user.UserName</td> 
+                <td>@user.Password</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private ICollection<User> users;
+
+    protected override async Task OnInitializedAsync() {
+        users = await UserDao.GetUsersAsync();
+    }
+}
