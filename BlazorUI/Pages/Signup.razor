@@ -33,6 +33,162 @@
 <label>@errorLabel</label>
 
 
+@if (order == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <RadzenTemplateForm Data="@order" Submit="@((Order args) => { Submit(args); })">
+        <div class="row justify-content-center">
+            <div class="col-md-6 big-box">
+                <RadzenFieldset Text="Contact Info">
+                    <RadzenTabs SelectedIndex="0">
+                        <Tabs>
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-4 align-items-center d-flex">
+                                        <RadzenLabel Text="Name" />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenTextBox style="width: 100%;" Name="name" @bind-Value="Name"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 align-items-center d-flex">
+                                        <RadzenLabel Text="Last Name">
+                                        </RadzenLabel>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenTextBox style="width: 100%;" Name="lastName" @bind-Value="LastName"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 align-items-center d-flex">
+                                        <RadzenLabel Text="Email" />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenTextBox style="width: 100%;" Name="eMail" @bind-Value="Email"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 align-items-center d-flex">
+                                        <RadzenLabel Text="Password" />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenTextBox style="width: 100%;" Name="pwd" @bind-Value="Pwd"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 align-items-center d-flex">
+                                        <RadzenLabel Text="re-Password" />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenTextBox style="width: 100%;" Name="repwd" @bind-Value="RePwd"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-4 align-items-center d-flex">
+                                    <RadzenLabel Text="Campus" />
+                                </div>
+                                <div class="col-md-8">
+                                    <RadzenDropDown @bind-Value="Campus" Placeholder="Aarhus" Data="@Campus" style="width: 100%;" TextProperty="Name" ValueProperty="Id" Name="Country">
+                                    </RadzenDropDown>
+                                </div>
+                            </div>
+                            </div>
+                        </Tabs>
+                    </RadzenTabs>
+                </RadzenFieldset>
+            </div>
+            <div>@errorLabel</div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12 d-flex align-items-end justify-content-center">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save"/>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancel" Click="@Cancel" />
+            </div>
+        </div>
+    </RadzenTemplateForm>
+}
+
+@code {
+    
+    public string Name { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
+    public string Pwd { get; set; }
+    public string RePwd { get; set; }
+    
+    List<string> Campus = new List<string>()
+    {
+         "Horsens",
+         "Aarhus" , 
+         "Viborg" 
+    };
+    
+    
+    public class Order
+    {
+        public int CardId { get; set; }
+        public string CardNr { get; set; }
+        public DateTime ExpiryDate { get; set; }
+        public string CardHolder { get; set; }
+        public string Name { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
+        public int Country { get; set; }
+        public int StoreId { get; set; }
+        public string Warehouse { get; set; }
+        public string Region { get; set; }
+        public string System { get; set; }
+        public int TransId { get; set; }
+        public string Register { get; set; }
+        public string Clerk { get; set; }
+        public decimal Amount { get; set; }
+        public decimal Tax { get; set; }
+        public DateTime OrderDate { get; set; }
+        public DateTime ShipDate { get; set; }
+    }
+
+    public class CreditCard
+    {
+        public int CardId { get; set; }
+        public string CardNr { get; set; }
+    }
+
+    public class Country
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    Order order = new Order()
+    {
+        ExpiryDate = DateTime.Parse("10/10/2022"),
+        OrderDate = DateTime.Now,
+        ShipDate = DateTime.Now
+    };
+
+    List<CreditCard> cards = new List<CreditCard>()
+{
+        new CreditCard() { CardId = 1, CardNr = "5555555555554444" },
+        new CreditCard() { CardId = 2, CardNr = "4012888888881881" }
+    };
+
+
+
+    void Submit(Order arg) {
+        
+    }
+
+    void Cancel() {
+        NavMgr.NavigateTo("/");
+    }
+}
 
 
 @code {
@@ -41,7 +197,7 @@
     
     private async Task AddNewUser()
     {
-        errorLabel = "";
+        errorLabel = "HOLAAAA";
         try
         {
             Console.WriteLine(newUser.UserName);

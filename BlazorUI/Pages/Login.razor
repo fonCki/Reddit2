@@ -1,19 +1,25 @@
 @page "/Login"
+@inject NavigationManager navMgr
 
 @using Application.Contracts
 @using Entities.Model
 @inject IUserDAO userDao
 
-<div class="col-12 col-sm-10 col-md-10 col-lg-7 col-xl-3">
-    <RadzenCard>
-        <h2 class="mb-4">Register and password reset</h2>
-        <RadzenTemplateForm Data=@("LoginWithRegisterAndReset")>
-            <RadzenLogin Login=@(args => OnLogin(args, "Login with register and password reset")) 
-                         ResetPassword=@(args => OnResetPassword(args, "Login with register and password reset"))
-                         Register=@(args => OnRegister("Login with register and password reset")) />
-        </RadzenTemplateForm>
-    </RadzenCard>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12  col-xl-5 main-box">
+            <RadzenCard>
+                <h2 class="mb-4">Register and password reset</h2>
+                <RadzenTemplateForm Data=@("LoginWithRegisterAndReset")>
+                    <RadzenLogin Login=@(args => OnLogin(args, "Login with register and password reset")) 
+                                 ResetPassword=@(args => OnResetPassword(args, "Login with register and password reset"))
+                                 Register=@(args => OnRegister("Login with register and password reset")) />
+                </RadzenTemplateForm>
+            </RadzenCard>
+        </div>
+    </div>
 </div>
+
 
 
 
@@ -28,7 +34,7 @@
 
     void OnRegister(string name)
     {
-    //  console.Log($"{name} -> Register");
+    navMgr.NavigateTo("/SignUp");
     }
 
     void OnResetPassword(string value, string name)
