@@ -5,41 +5,14 @@
 @using Application.Contracts
 @inject IUserDAO userDao
 @inject NavigationManager NavMgr
-<h3>CreateUser</h3>
 
-<EditForm Model ="@newUser" OnValidSubmit="@AddNewUser">
-    <DataAnnotationsValidator/> 
-    <ValidationSummary/>
-    <div class="form-group">
-        <span>
-            <label>User Id:</label>
-        </span>
-        <span>
-            <InputText @bind-Value="newUser.UserName"/>
-        </span>
-    </div>
-    <div class="form-group">
-        <span>
-            <label>Title:</label>
-        </span>
-        <span>
-            <InputText type="password" @bind-Value="newUser.Password"/>
-        </span>
-    </div>
-    <p class="actions">
-        <button class="btn btn-outline-dark" type="submit">Create</button>
-    </p>
-</EditForm>
-<label>@errorLabel</label>
-
-
-@if (order == null)
+@if (newUser == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <RadzenTemplateForm Data="@order" Submit="@((Order args) => { Submit(args); })">
+    <RadzenTemplateForm Data="@newUser" Submit="@((User args) => { Submit(args); })">
         <div class="row justify-content-center">
             <div class="col-md-6 big-box">
                 <RadzenFieldset Text="Contact Info">
@@ -51,7 +24,7 @@ else
                                         <RadzenLabel Text="Name" />
                                     </div>
                                     <div class="col-md-8">
-                                        <RadzenTextBox style="width: 100%;" Name="name" @bind-Value="Name"/>
+                                        <RadzenTextBox style="width: 100%;" Name="UserName" @bind-Value="newUser.UserName"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -60,7 +33,7 @@ else
                                         </RadzenLabel>
                                     </div>
                                     <div class="col-md-8">
-                                        <RadzenTextBox style="width: 100%;" Name="lastName" @bind-Value="LastName"/>
+                                        <RadzenTextBox style="width: 100%;" Name="LastName" @bind-Value="newUser.LastName"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -68,7 +41,7 @@ else
                                         <RadzenLabel Text="Email" />
                                     </div>
                                     <div class="col-md-8">
-                                        <RadzenTextBox style="width: 100%;" Name="eMail" @bind-Value="Email"/>
+                                        <RadzenTextBox style="width: 100%;" Name="EMail" @bind-Value="newUser.Email"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -76,7 +49,7 @@ else
                                         <RadzenLabel Text="Password" />
                                     </div>
                                     <div class="col-md-8">
-                                        <RadzenTextBox style="width: 100%;" Name="pwd" @bind-Value="Pwd"/>
+                                        <RadzenTextBox style="width: 100%;" type="password" Name="pPd" @bind-Value="newUser.Password"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -84,28 +57,29 @@ else
                                         <RadzenLabel Text="re-Password" />
                                     </div>
                                     <div class="col-md-8">
-                                        <RadzenTextBox style="width: 100%;" Name="repwd" @bind-Value="RePwd"/>
+                                        <RadzenTextBox style="width: 100%;" type="password" Name="RePwd" @bind-Value="RePwd" Change="@Eval"/>
                                     </div>
                                 </div>
-                                <div class="row">
-                                <div class="col-md-4 align-items-center d-flex">
-                                    <RadzenLabel Text="Campus" />
-                                </div>
-                                <div class="col-md-8">
-                                    <RadzenDropDown @bind-Value="Campus" Placeholder="Aarhus" Data="@Campus" style="width: 100%;" TextProperty="Name" ValueProperty="Id" Name="Country">
-                                    </RadzenDropDown>
-                                </div>
-                            </div>
+                                @* <div class="row"> *@
+                                    @* <div class="col-md-4 align-items-center d-flex"> *@
+                                        @* <RadzenLabel Text="Campus" /> *@
+                                    @* </div> *@
+                                    @* <div class="col-md-8"> *@
+                                        @* <RadzenDropDown @bind-Value="Campus" Placeholder="Aarhus" Data="@Campus" style="width: 100%;" TextProperty="Name" ValueProperty="Id" Name="Country"> *@
+                                        @* </RadzenDropDown> *@
+                                    @* </div> *@
+                                @* </div> *@
                             </div>
                         </Tabs>
                     </RadzenTabs>
+                    <p class="error-label">@errorLabel</p>
                 </RadzenFieldset>
             </div>
-            <div>@errorLabel</div>
+
         </div>
         <div class="row justify-content-center">
             <div class="col-md-12 d-flex align-items-end justify-content-center">
-                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save"/>
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" Disabled=@Error()/>
                 <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancel" Click="@Cancel" />
             </div>
         </div>
@@ -114,94 +88,28 @@ else
 
 @code {
     
-    public string Name { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public string Pwd { get; set; }
+  //  public string UserName { get; set; }
     public string RePwd { get; set; }
     
+   /*
     List<string> Campus = new List<string>()
     {
          "Horsens",
          "Aarhus" , 
          "Viborg" 
     };
+    */
     
-    
-    public class Order
-    {
-        public int CardId { get; set; }
-        public string CardNr { get; set; }
-        public DateTime ExpiryDate { get; set; }
-        public string CardHolder { get; set; }
-        public string Name { get; set; }
-        public string Address1 { get; set; }
-        public string Address2 { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Zip { get; set; }
-        public int Country { get; set; }
-        public int StoreId { get; set; }
-        public string Warehouse { get; set; }
-        public string Region { get; set; }
-        public string System { get; set; }
-        public int TransId { get; set; }
-        public string Register { get; set; }
-        public string Clerk { get; set; }
-        public decimal Amount { get; set; }
-        public decimal Tax { get; set; }
-        public DateTime OrderDate { get; set; }
-        public DateTime ShipDate { get; set; }
-    }
+    private string errorLabel = "";
 
-    public class CreditCard
-    {
-        public int CardId { get; set; }
-        public string CardNr { get; set; }
-    }
-
-    public class Country
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
-
-    Order order = new Order()
-    {
-        ExpiryDate = DateTime.Parse("10/10/2022"),
-        OrderDate = DateTime.Now,
-        ShipDate = DateTime.Now
-    };
-
-    List<CreditCard> cards = new List<CreditCard>()
-{
-        new CreditCard() { CardId = 1, CardNr = "5555555555554444" },
-        new CreditCard() { CardId = 2, CardNr = "4012888888881881" }
-    };
-
-
-
-    void Submit(Order arg) {
-        
-    }
-
-    void Cancel() {
-        NavMgr.NavigateTo("/");
-    }
-}
-
-
-@code {
     private User newUser = new User();
-    private string errorLabel;
-    
-    private async Task AddNewUser()
-    {
-        errorLabel = "HOLAAAA";
+
+
+
+
+    private async Task Submit(User arg) {
         try
         {
-            Console.WriteLine(newUser.UserName);
-            Console.WriteLine(newUser.Password);
             await userDao.AddUserAsync(newUser);
         }
         catch (Exception e)
@@ -212,5 +120,23 @@ else
         
         NavMgr.NavigateTo("/Users");
     }
+
+    void Cancel() {
+        NavMgr.NavigateTo("/");
+    }
+
+    private async Task Eval() {
+        if (!RePwd.Equals(newUser.Password)) {
+            errorLabel = "Passwords must be equals";
+        }
+        else {
+            errorLabel = "";
+        }
+    }
+
+    private bool Error() {
+        return !"".Equals(errorLabel);
+    }
+    
     
 }

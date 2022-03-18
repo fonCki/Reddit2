@@ -7,3 +7,9 @@
     max-width: 30em;
     
 }
+
+.error-label {
+    text-align: center;
+    color: red;
+    /*background-color: #ffda2f; !important;*/
+}
