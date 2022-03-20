@@ -2,8 +2,9 @@
 @inject NavigationManager navMgr
 
 @using Application.Contracts
+@using BlazorUI.Authentication
 @using Entities.Model
-@inject IUserDAO userDao
+@inject IAuthService authService
 
 <div class="container">
     <div class="row justify-content-center">
@@ -11,10 +12,11 @@
             <RadzenCard>
                 <h2 class="mb-4">Register and password reset</h2>
                 <RadzenTemplateForm Data=@("LoginWithRegisterAndReset")>
-                    <RadzenLogin Login=@(args => OnLogin(args, "Login with register and password reset")) 
+                    <RadzenLogin Login=@(args => OnLogin(args, "Login with register and password reset"))
                                  ResetPassword=@(args => OnResetPassword(args, "Login with register and password reset"))
-                                 Register=@(args => OnRegister("Login with register and password reset")) />
+                                 Register=@(args => OnRegister("Login with register and password reset"))/>
                 </RadzenTemplateForm>
+                <p>@errorLabel</p>
             </RadzenCard>
         </div>
     </div>
@@ -26,10 +28,18 @@
 @code {
     string userName = "admin";
     string password = "admin";
-    // EventConsole console;
+    string errorLabel;
 
-    void OnLogin(LoginArgs args, string name) {
-        userDao.AddUserAsync(new User(userName, password));
+
+    private async Task OnLogin(LoginArgs args, string name) {
+        errorLabel = "";
+        try {
+            await authService.LoginAsync(args.Username, args.Password);
+            navMgr.NavigateTo("/");
+        }
+        catch (Exception e) {
+            errorLabel = e.Message;
+        }
     }
 
     void OnRegister(string name)

@@ -1,6 +1,7 @@
+@using BlazorUI.Authentication
 
 @inject NavigationManager navMgr
-
+@inject IAuthService authService
 
 <div class="container one">
     <div class="row">
@@ -11,33 +12,42 @@
             <input class="form-control me-2" type="search" placeholder="Search Reddit2" aria-label="Search">
         </div>
         @* <div class="col 3"></div> *@
-
-
+        
         <div class="col-4 text-right cone">
             <div class="container">
                 <div class="row justify-content-end">
-                        <div class="col-4">
-                            <button type="button" class="btn btn-outline-primary" @onclick="@LogIn">Log In</button>
-                        </div>
-                        <div class="col-4">
-                            <button type="button" class="btn btn-primary" @onclick="@SignUp">Sign Up</button>
-                        </div>   
-                        <div class="col-4">    
-                            <Dropdown TItem="string" OnSelected="@OnSelected">
-                                <InitialTip>This is a dropdown list</InitialTip>
-                                <ChildContent>
-                                    <DropDownListItem Item="@list[0]">.NET</DropDownListItem>
-                                    <DropDownListItem Item="@list[1]">Python</DropDownListItem>
-                                    <div class="dropdown-divider"></div>
-                                    <DropDownListItem Item="@list[2]">Java</DropDownListItem>
-                                </ChildContent>
-                            </Dropdown>
-                        </div>   
+                    <AuthorizeView>
+                        <Authorized>
+                            <div class="col-4">
+                                <button type="button" class="btn btn-outline-primary" @onclick="@LogOut">SOS VOS PAPA</button>
+                            </div>
+                        </Authorized>
+                        <NotAuthorized>
+                            <div class="col-4">
+                                <button type="button" class="btn btn-outline-primary" @onclick="@LogIn">Log In</button>
+                            </div>
+                            <div class="col-4">
+                                <button type="button" class="btn btn-primary" @onclick="@SignUp">Sign Up</button>
+                            </div>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                    <div class="col-4">
+                        <Dropdown TItem="string" OnSelected="@OnSelected">
+                            <InitialTip>This is a dropdown list</InitialTip>
+                            <ChildContent>
+                                <DropDownListItem Item="@list[0]">.NET</DropDownListItem>
+                                <DropDownListItem Item="@list[1]">Python</DropDownListItem>
+                                <div class="dropdown-divider"></div>
+                                <DropDownListItem Item="@list[2]">Java</DropDownListItem>
+                            </ChildContent>
+                        </Dropdown>
                     </div>
+                </div>
             </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
+
     @code {
         
      List<string> list = new List<string>{ ".NET", "Python","Java" }; 
@@ -52,5 +62,9 @@
 
         private void SignUp() {
             navMgr.NavigateTo("/SignUp");
+        }
+        
+        private void LogOut() {
+            authService.LogoutAsync();
         }
 }

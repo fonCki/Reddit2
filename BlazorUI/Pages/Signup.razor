@@ -1,94 +1,94 @@
 @page "/Signup"
-<h3>Signup</h3>
 
 @using Entities.Model
 @using Application.Contracts
+@using Microsoft.AspNetCore.Components
 @inject IUserDAO userDao
 @inject NavigationManager NavMgr
 
-@if (newUser == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <RadzenTemplateForm Data="@newUser" Submit="@((User args) => { Submit(args); })">
-        <div class="row justify-content-center">
-            <div class="col-md-6 big-box">
-                <RadzenFieldset Text="Contact Info">
-                    <RadzenTabs SelectedIndex="0">
-                        <Tabs>
-                            <div>
-                                <div class="row">
-                                    <div class="col-md-4 align-items-center d-flex">
-                                        <RadzenLabel Text="Name" />
-                                    </div>
-                                    <div class="col-md-8">
-                                        <RadzenTextBox style="width: 100%;" Name="UserName" @bind-Value="newUser.UserName"/>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 align-items-center d-flex">
-                                        <RadzenLabel Text="Last Name">
-                                        </RadzenLabel>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <RadzenTextBox style="width: 100%;" Name="LastName" @bind-Value="newUser.LastName"/>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 align-items-center d-flex">
-                                        <RadzenLabel Text="Email" />
-                                    </div>
-                                    <div class="col-md-8">
-                                        <RadzenTextBox style="width: 100%;" Name="EMail" @bind-Value="newUser.Email"/>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 align-items-center d-flex">
-                                        <RadzenLabel Text="Password" />
-                                    </div>
-                                    <div class="col-md-8">
-                                        <RadzenTextBox style="width: 100%;" type="password" Name="pPd" @bind-Value="newUser.Password"/>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 align-items-center d-flex">
-                                        <RadzenLabel Text="re-Password" />
-                                    </div>
-                                    <div class="col-md-8">
-                                        <RadzenTextBox style="width: 100%;" type="password" Name="RePwd" @bind-Value="RePwd" Change="@Eval"/>
-                                    </div>
-                                </div>
-                                @* <div class="row"> *@
-                                    @* <div class="col-md-4 align-items-center d-flex"> *@
-                                        @* <RadzenLabel Text="Campus" /> *@
-                                    @* </div> *@
-                                    @* <div class="col-md-8"> *@
-                                        @* <RadzenDropDown @bind-Value="Campus" Placeholder="Aarhus" Data="@Campus" style="width: 100%;" TextProperty="Name" ValueProperty="Id" Name="Country"> *@
-                                        @* </RadzenDropDown> *@
-                                    @* </div> *@
-                                @* </div> *@
-                            </div>
-                        </Tabs>
-                    </RadzenTabs>
-                    <p class="error-label">@errorLabel</p>
-                </RadzenFieldset>
-            </div>
 
+<RadzenTemplateForm Data="@newUser" Submit="@((User args) => { Submit(args); })">
+    <div class="row justify-content-center">
+        <div class="col-md-6 big-box">
+            <RadzenFieldset Text="Contact Info">
+                <RadzenTabs SelectedIndex="0">
+                    <Tabs>
+                        <div>
+                            <div class="row">
+                                <div class="col-md-4 align-items-center d-flex">
+                                    <RadzenLabel Text="Name" />
+                                </div>
+                                <div class="col-md-8">
+                                    <RadzenTextBox style="width: 100%;" Name="Fname" @bind-Value="FName"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 align-items-center d-flex">
+                                    <RadzenLabel Text="Last Name">
+                                    </RadzenLabel>
+                                </div>
+                                <div class="col-md-8">
+                                    <RadzenTextBox style="width: 100%;" Name="LastName" @bind-Value="LName"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 align-items-center d-flex">
+                                    <RadzenLabel Text="Email" />
+                                </div>
+                                <div class="col-md-8">
+                                    <RadzenTextBox style="width: 100%;" Name="EMail" @bind-Value="Email"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 align-items-center d-flex">
+                                    <RadzenLabel Text="Password" />
+                                </div>
+                                <div class="col-md-8">
+                                    <RadzenTextBox style="width: 100%;" type="password" Name="Pwd" @bind-Value="Pwd"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 align-items-center d-flex">
+                                    <RadzenLabel Text="re-Password" />
+                                </div>
+                                <div class="col-md-8">
+                                    <RadzenTextBox style="width: 100%;" type="password" Name="RePwd" @bind-Value="RePwd" Change="@Eval"/>
+                                </div>
+                            </div>
+                            @* <div class="row"> *@
+                            @* <div class="col-md-4 align-items-center d-flex"> *@
+                            @* <RadzenLabel Text="Campus" /> *@
+                            @* </div> *@
+                            @* <div class="col-md-8"> *@
+                            @* <RadzenDropDown @bind-Value="Campus" Placeholder="Aarhus" Data="@Campus" style="width: 100%;" TextProperty="Name" ValueProperty="Id" Name="Country"> *@
+                            @* </RadzenDropDown> *@
+                            @* </div> *@
+                            @* </div> *@
+                        </div>
+                    </Tabs>
+                </RadzenTabs>
+                <p class="error-label">@errorLabel</p>
+            </RadzenFieldset>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-md-12 d-flex align-items-end justify-content-center">
-                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" Disabled=@Error()/>
-                <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancel" Click="@Cancel" />
-            </div>
+
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-12 d-flex align-items-end justify-content-center">
+            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" Disabled=@Error()/>
+            <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancel" Click="@Cancel" />
         </div>
-    </RadzenTemplateForm>
-}
+    </div>
+</RadzenTemplateForm>
+
+
 
 @code {
+    User newUser = new User("example", "", "", "");
+    public string FName;
+    public string LName;
+    public string Email;
+    public string Pwd;
     
-  //  public string UserName { get; set; }
     public string RePwd { get; set; }
     
    /*
@@ -102,7 +102,7 @@ else
     
     private string errorLabel = "";
 
-    private User newUser = new User();
+
 
 
 
@@ -110,7 +110,8 @@ else
     private async Task Submit(User arg) {
         try
         {
-            await userDao.AddUserAsync(newUser);
+            User otherUser = new User(FName, LName, Email, Pwd);
+            await userDao.AddUserAsync(otherUser);
         }
         catch (Exception e)
         {
@@ -126,7 +127,7 @@ else
     }
 
     private async Task Eval() {
-        if (!RePwd.Equals(newUser.Password)) {
+        if (!RePwd.Equals(Pwd)) {
             errorLabel = "Passwords must be equals";
         }
         else {
