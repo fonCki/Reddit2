@@ -19,7 +19,7 @@
                     <AuthorizeView>
                         <Authorized>
                             <div class="col-4">
-                                <button type="button" class="btn btn-outline-primary" @onclick="@LogOut">SOS VOS PAPA</button>
+                                <button type="button" class="btn btn-outline-primary" @onclick="@LogOut">LogOut</button>
                             </div>
                         </Authorized>
                         <NotAuthorized>
@@ -32,15 +32,22 @@
                         </NotAuthorized>
                     </AuthorizeView>
                     <div class="col-4">
-                        <Dropdown TItem="string" OnSelected="@OnSelected">
-                            <InitialTip>This is a dropdown list</InitialTip>
-                            <ChildContent>
-                                <DropDownListItem Item="@list[0]">.NET</DropDownListItem>
-                                <DropDownListItem Item="@list[1]">Python</DropDownListItem>
-                                <div class="dropdown-divider"></div>
-                                <DropDownListItem Item="@list[2]">Java</DropDownListItem>
-                            </ChildContent>
-                        </Dropdown>
+                        @* <RadzenCard Style="margin-bottom: 200px; width: fit-content; min-width: 300px;" Class="mt-5 mx-auto text-right"> *@
+                        <RadzenProfileMenu >
+                            <Template>
+                                <Avatar />
+                                @* <RadzenGravatar Email="u@eddgample.cbbbom"> *@
+                                @* </RadzenGravatar > *@
+                            </Template>
+                                <ChildContent>
+                                    <RadzenProfileMenuItem Text="Buttons" Path="buttons" Icon="account_circle"></RadzenProfileMenuItem>
+                                    <RadzenProfileMenuItem Text="Menu" Path="menu" Icon="line_weight"></RadzenProfileMenuItem>
+                                    <RadzenProfileMenuItem Text="FileInput" Path="fileinput" Icon="attach_file"></RadzenProfileMenuItem>
+                                    <RadzenProfileMenuItem Text="Dialog" Path="dialog" Icon="perm_media"></RadzenProfileMenuItem>
+                                    <RadzenProfileMenuItem Text="Notification" Path="notification" Icon="announcement"></RadzenProfileMenuItem>
+                                </ChildContent>
+                            </RadzenProfileMenu>
+                        @* </RadzenCard> *@
                     </div>
                 </div>
             </div>

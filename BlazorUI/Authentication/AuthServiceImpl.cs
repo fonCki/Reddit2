@@ -96,7 +96,7 @@ public class AuthServiceImpl : IAuthService {
         List<Claim> claims = new()
         {
             new Claim(ClaimTypes.Name, user.Email),
-            // new Claim("Role", user.Role),
+             new Claim("Role", user.FirstName),
             // new Claim("SecurityLevel", user.SecurityLevel.ToString()),
             // new Claim("BirthYear", user.BirthYear.ToString()),
             // new Claim("Domain", user.Domain)

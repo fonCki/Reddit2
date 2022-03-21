@@ -1,5 +1,7 @@
 using System.Security.Claims;
 using Application.Contracts;
+using Blazorise;
+using Blazorise.Bootstrap;
 using BlazorUI.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;

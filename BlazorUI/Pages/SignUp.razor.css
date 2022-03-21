@@ -13,3 +13,44 @@
     color: red;
     /*background-color: #ffda2f; !important;*/
 }
+
+.avatar {
+    display: flex;
+    justify-content: center;
+    /*background-color: #0dcaf0;*/
+    text-align: center;
+    align-items: center;
+}
+
+.avatar img {
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.file-input-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    width: 120px;
+    height: 30px;
+}
+
+.file-input-zone:hover {
+    background-color: lightblue;
+}
+
+.file-input-zone input[type=file] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.input-file {
+    display: none;
+}

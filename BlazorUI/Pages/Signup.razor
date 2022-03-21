@@ -14,9 +14,19 @@
                 <RadzenTabs SelectedIndex="0">
                     <Tabs>
                         <div>
+                            <div class="row avatar">
+                                <div class="col-md-4 align-items-center d-flex">
+                                    <img src="/images/-user-login.png" width="200" height="200">
+                                    @* <div class="file-input-zone"> *@
+                                        @* change *@
+                                        <InputFile OnChange="@LoadFiles" />
+                                    @* </div> *@
+                                        
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-4 align-items-center d-flex">
-                                    <RadzenLabel Text="Name" />
+                                    <RadzenLabel Text="Name"/>
                                 </div>
                                 <div class="col-md-8">
                                     <RadzenTextBox style="width: 100%;" Name="Fname" @bind-Value="FName"/>
@@ -33,7 +43,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 align-items-center d-flex">
-                                    <RadzenLabel Text="Email" />
+                                    <RadzenLabel Text="Email"/>
                                 </div>
                                 <div class="col-md-8">
                                     <RadzenTextBox style="width: 100%;" Name="EMail" @bind-Value="Email"/>
@@ -41,7 +51,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 align-items-center d-flex">
-                                    <RadzenLabel Text="Password" />
+                                    <RadzenLabel Text="Password"/>
                                 </div>
                                 <div class="col-md-8">
                                     <RadzenTextBox style="width: 100%;" type="password" Name="Pwd" @bind-Value="Pwd"/>
@@ -49,21 +59,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 align-items-center d-flex">
-                                    <RadzenLabel Text="re-Password" />
+                                    <RadzenLabel Text="re-Password"/>
                                 </div>
                                 <div class="col-md-8">
                                     <RadzenTextBox style="width: 100%;" type="password" Name="RePwd" @bind-Value="RePwd" Change="@Eval"/>
                                 </div>
                             </div>
-                            @* <div class="row"> *@
-                            @* <div class="col-md-4 align-items-center d-flex"> *@
-                            @* <RadzenLabel Text="Campus" /> *@
-                            @* </div> *@
-                            @* <div class="col-md-8"> *@
-                            @* <RadzenDropDown @bind-Value="Campus" Placeholder="Aarhus" Data="@Campus" style="width: 100%;" TextProperty="Name" ValueProperty="Id" Name="Country"> *@
-                            @* </RadzenDropDown> *@
-                            @* </div> *@
-                            @* </div> *@
                         </div>
                     </Tabs>
                 </RadzenTabs>
@@ -102,11 +103,6 @@
     
     private string errorLabel = "";
 
-
-
-
-
-
     private async Task Submit(User arg) {
         try
         {
@@ -139,5 +135,63 @@
         return !"".Equals(errorLabel);
     }
     
+    /////Photo part
+    
+    private List<IBrowserFile> loadedFiles = new();
+    private long maxFileSize = 1024 * 15;
+    private bool isLoading;
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        isLoading = true;
+        loadedFiles.Clear();
+
+        foreach (var file in e.GetMultipleFiles(1))
+        {
+            try
+            {
+                Stream stream = file.OpenReadStream();
+                var path = $"photo.jpg";
+                FileStream fs = File.Create(path);
+                await stream.CopyToAsync(fs);
+                fs.Close();
+                stream.Close();
+                
+                Console.WriteLine("Hola");
+
+                FileStream fs2 = new FileStream(path, FileMode.Open, FileAccess.Read);
+                int length = Convert.ToInt32(fs2.Length);
+                byte[] data = new byte[length];
+                fs2.Read(data, 0, length);
+                fs2.Close();
+                Console.WriteLine("done");
+                string base64ImageRepresentation = Convert.ToBase64String(data);
+                Console.WriteLine(base64ImageRepresentation);
+    // Console.WriteLine("Hola");
+               
+                
+    /*
+                loadedFiles.Add(file);
+                Console.WriteLine("DOne");
+                var trustedFileNameForFileStorage = Path.GetRandomFileName();
+                var path = Path.Combine(Environment.ContentRootPath,
+                        Environment.EnvironmentName, "unsafe_uploads",
+                        trustedFileNameForFileStorage);
+
+                await using FileStream fs = new(path, FileMode.Create);
+                await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+                */
+
+
+
+            }
+            catch (Exception ex)
+            {
+   
+            }
+        }
+
+        isLoading = false;
+    }
     
 }

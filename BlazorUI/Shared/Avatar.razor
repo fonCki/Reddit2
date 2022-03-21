@@ -1,0 +1,58 @@
+
+@using System.Security.Claims
+@using Entities.Model
+
+
+
+
+
+<div>
+    <AuthorizeView>
+        <NotAuthorized>
+            <img src=@image width="30" height="30">
+        </NotAuthorized>
+        <Authorized>
+            <p>@context.User.Identity.Name</p>
+        </Authorized>
+    </AuthorizeView>
+        
+   
+</div>
+
+@code {
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    
+    private string? name;
+    private IEnumerable<Claim>? userClaims;
+    private bool isLoggedIn;
+    
+    private string image = "/images/-user-login.png";
+
+
+    protected override async Task OnInitializedAsync() {
+        
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+        isLoggedIn = user.Identity != null;
+
+        if (!isLoggedIn) return;
+        
+        userClaims = user.Claims;
+        name = user.Identity!.Name!;
+    }
+
+    public async Task getName() {
+        
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+        isLoggedIn = user.Identity != null;
+
+        if (!isLoggedIn) return;
+        userClaims = user.Claims;
+        Console.WriteLine(user.Identity!.Name!);
+        
+        name = user.Identity!.Name!;
+    }
+}

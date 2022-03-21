@@ -17,3 +17,15 @@ img {
 button {
     width: 100px;
 }
+
+
+
+.drop-menu {
+    cursor: pointer;
+    background-color: #0dcaf0;
+}
+
+
+ {
+    /*background-color: #0dcaf0;*/
+}

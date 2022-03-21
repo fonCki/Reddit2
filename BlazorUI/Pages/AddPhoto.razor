@@ -67,7 +67,7 @@ else
             try
             {
                 Stream stream = file.OpenReadStream();
-                var path = $"pedo.jpg";
+                var path = $"photo.jpg";
                 FileStream fs = File.Create(path);
                 await stream.CopyToAsync(fs);
                 fs.Close();
