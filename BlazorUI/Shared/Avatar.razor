@@ -12,7 +12,7 @@
             <img src=@image width="30" height="30">
         </NotAuthorized>
         <Authorized>
-            <p>@context.User.Identity.Name</p>
+            <img src=@context.User.Claims.First(c => "photo".Equals(c.Type)).Value width="30" height="30">
         </Authorized>
     </AuthorizeView>
         

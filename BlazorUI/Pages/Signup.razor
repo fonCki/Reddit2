@@ -16,12 +16,12 @@
                         <div>
                             <div class="row avatar">
                                 <div class="col-md-4 align-items-center d-flex">
-                                    <img src="/images/-user-login.png" width="200" height="200">
+                                    <img src=@imageSource width="200" height="200">
                                     @* <div class="file-input-zone"> *@
-                                        @* change *@
-                                        <InputFile OnChange="@LoadFiles" />
+                                    @* change *@
+                                    <InputFile OnChange="@LoadFiles"/>
                                     @* </div> *@
-                                        
+
                                 </div>
                             </div>
                             <div class="row">
@@ -84,13 +84,15 @@
 
 
 @code {
-    User newUser = new User("example", "", "", "");
+    User newUser = new User("example", "", "", "", "");
     public string FName;
     public string LName;
     public string Email;
     public string Pwd;
+    public string Image { get; set; }
     
     public string RePwd { get; set; }
+    private string imageSource = "/images/temp/-user-login.png";
     
    /*
     List<string> Campus = new List<string>()
@@ -106,7 +108,7 @@
     private async Task Submit(User arg) {
         try
         {
-            User otherUser = new User(FName, LName, Email, Pwd);
+            User otherUser = new User(FName, LName, Email, Pwd, imageSource);
             await userDao.AddUserAsync(otherUser);
         }
         catch (Exception e)
@@ -137,61 +139,61 @@
     
     /////Photo part
     
-    private List<IBrowserFile> loadedFiles = new();
-    private long maxFileSize = 1024 * 15;
-    private bool isLoading;
 
-    private async Task LoadFiles(InputFileChangeEventArgs e)
-    {
-        isLoading = true;
-        loadedFiles.Clear();
+    
 
-        foreach (var file in e.GetMultipleFiles(1))
+    private async Task LoadFiles(InputFileChangeEventArgs e) {
+        
+        IBrowserFile myFile = e.File;
+
+        try
         {
-            try
-            {
-                Stream stream = file.OpenReadStream();
-                var path = $"photo.jpg";
-                FileStream fs = File.Create(path);
-                await stream.CopyToAsync(fs);
-                fs.Close();
-                stream.Close();
-                
-                Console.WriteLine("Hola");
+            Stream stream = myFile.OpenReadStream();
+          
+ 
+            string path  = $"wwwroot/images/temp/{e.File.Name}";
+            FileStream fs = File.Create(path);
+            await stream.CopyToAsync(fs);
+            fs.Close();
+            stream.Close();
+            
+            Console.WriteLine("Hola");
 
-                FileStream fs2 = new FileStream(path, FileMode.Open, FileAccess.Read);
-                int length = Convert.ToInt32(fs2.Length);
-                byte[] data = new byte[length];
-                fs2.Read(data, 0, length);
-                fs2.Close();
-                Console.WriteLine("done");
-                string base64ImageRepresentation = Convert.ToBase64String(data);
-                Console.WriteLine(base64ImageRepresentation);
-    // Console.WriteLine("Hola");
-               
-                
-    /*
-                loadedFiles.Add(file);
-                Console.WriteLine("DOne");
-                var trustedFileNameForFileStorage = Path.GetRandomFileName();
-                var path = Path.Combine(Environment.ContentRootPath,
-                        Environment.EnvironmentName, "unsafe_uploads",
-                        trustedFileNameForFileStorage);
+            FileStream fs2 = new FileStream(path, FileMode.Open, FileAccess.Read);
+            int length = Convert.ToInt32(fs2.Length);
+            byte[] data = new byte[length];
+            fs2.Read(data, 0, length);
+            fs2.Close();
+            Console.WriteLine("done");
+            string base64ImageRepresentation = Convert.ToBase64String(data);
+            Console.WriteLine(base64ImageRepresentation);
+            this.imageSource = $"/images/temp/{e.File.Name}";
+// Console.WriteLine("Hola");
+           
+            
+/*
+            loadedFiles.Add(file);
+            Console.WriteLine("DOne");
+            var trustedFileNameForFileStorage = Path.GetRandomFileName();
+            var path = Path.Combine(Environment.ContentRootPath,
+                    Environment.EnvironmentName, "unsafe_uploads",
+                    trustedFileNameForFileStorage);
 
-                await using FileStream fs = new(path, FileMode.Create);
-                await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
-                */
+            await using FileStream fs = new(path, FileMode.Create);
+            await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+            */
 
 
 
-            }
-            catch (Exception ex)
-            {
-   
-            }
+        }
+        catch (Exception ex)
+        {
+
         }
 
-        isLoading = false;
-    }
+
     
+        
+}
+
 }

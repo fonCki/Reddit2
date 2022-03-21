@@ -4,73 +4,99 @@
       "FirstName": null,
       "LastName": null,
       "Email": "jorge",
-      "Password": "Jorge123"
+      "Password": "Jorge123",
+      "ImagePath": null
     },
     {
       "FirstName": null,
       "LastName": null,
       "Email": "alfonsoridao@gmail.com",
-      "Password": null
+      "Password": null,
+      "ImagePath": null
     },
     {
       "FirstName": null,
       "LastName": null,
       "Email": "alfonsoridao@jgmail.com",
-      "Password": "h"
+      "Password": "h",
+      "ImagePath": null
     },
     {
       "FirstName": null,
       "LastName": null,
       "Email": "alfonsoridao@gmail.comh",
-      "Password": "h"
+      "Password": "h",
+      "ImagePath": null
     },
     {
       "FirstName": null,
       "LastName": null,
       "Email": "@gmail.com",
-      "Password": "jj"
+      "Password": "jj",
+      "ImagePath": null
     },
     {
       "FirstName": "example",
       "LastName": "",
       "Email": "",
-      "Password": ""
+      "Password": "",
+      "ImagePath": null
     },
     {
       "FirstName": "e",
       "LastName": "e",
       "Email": "er",
-      "Password": "er"
+      "Password": "er",
+      "ImagePath": null
     },
     {
       "FirstName": null,
       "LastName": null,
       "Email": "tre",
-      "Password": "w"
+      "Password": "w",
+      "ImagePath": null
     },
     {
       "FirstName": null,
       "LastName": "g",
       "Email": "ss",
-      "Password": "g"
+      "Password": "g",
+      "ImagePath": null
     },
     {
       "FirstName": "Jose",
       "LastName": "Garcia",
       "Email": "joseGarcia@gmail.com",
-      "Password": "Come"
+      "Password": "Come",
+      "ImagePath": null
     },
     {
       "FirstName": "fgh",
       "LastName": "sa",
       "Email": "joseGarcid@gmail.com",
-      "Password": "as"
+      "Password": "as",
+      "ImagePath": null
     },
     {
       "FirstName": null,
       "LastName": null,
       "Email": "admin",
-      "Password": "admin"
+      "Password": "admin",
+      "ImagePath": null
+    },
+    {
+      "FirstName": "Jose",
+      "LastName": "Del Rio",
+      "Email": "josesito@gmail.com",
+      "Password": "12",
+      "ImagePath": "/images/temp/Screen Shot 2022-03-15 at 4.32.32 PM.png"
+    },
+    {
+      "FirstName": "asd",
+      "LastName": "df",
+      "Email": "df",
+      "Password": "sd",
+      "ImagePath": "/images/temp/Screen Shot 2022-03-16 at 8.37.33 AM.png"
     }
   ]
 }
