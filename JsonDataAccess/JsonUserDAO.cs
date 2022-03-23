@@ -7,39 +7,30 @@ public class JsonUserDAO : IUserDAO{
     
     private JsonContext jsonContext;
 
-    public JsonUserDAO() {
+    public JsonUserDAO(JsonContext jsonContext) {
         this.jsonContext = new JsonContext();
     }
     
-    /*
-    public JsonUserDAO(JsonContext jsonContext) {
-        this.jsonContext = jsonContext;
-        //     this.users = jsonContext.Forum.Users;
-    }*/
-
     public async Task<ICollection<User>> GetUsersAsync() {
         return jsonContext.Forum.Users;
     }
     
 
     public async Task<User?> GetByUserAsyncByEmail(string email) {
-        List<User> usersList = (List<User>) jsonContext.Forum.Users;
-        User? foundedUser = usersList.Find(u => email.Equals(u.Email));
+        User? foundedUser = jsonContext.Forum.Users.
+            FirstOrDefault(u => email.Equals(u.Email));
         return foundedUser;
     }
 
     public async Task<User> AddUserAsync(User user) {
-        // User? foundedUser =  GetByUserByEmail(user.Email).Result;
-        // Console.WriteLine(foundedUser.Email);
         if (await existUser(user.Email)) {
             throw new Exception("User already exist");
         }
-        else { 
+        else {
             jsonContext.Forum.Users.Add(user);
             jsonContext.SaveChangesAsync();
+            return user;
         }
-
-        return null;
     }
 
     public async Task DeleteUserAsync(string email) {
@@ -54,8 +45,7 @@ public class JsonUserDAO : IUserDAO{
     }
 
     private async Task<bool> existUser(string email) {
-        List<User> usersList = (List<User>) jsonContext.Forum.Users;
-        return usersList.Exists(u => email.Equals(u.Email));
+        return jsonContext.Forum.Users.Any(u => email.Equals(u.Email));
     }
     
 }

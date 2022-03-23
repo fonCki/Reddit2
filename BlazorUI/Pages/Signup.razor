@@ -3,28 +3,30 @@
 @using Entities.Model
 @using Application.Contracts
 @using Microsoft.AspNetCore.Components
+@using System.ComponentModel.DataAnnotations
 @inject IUserDAO userDao
 @inject NavigationManager NavMgr
 
 
-<RadzenTemplateForm Data="@newUser" Submit="@((User args) => { Submit(args); })">
+<RadzenTemplateForm Data="@newUser"  Submit="@((User args) => { Submit(args); })">
     <div class="row justify-content-center">
         <div class="col-md-6 big-box">
             <RadzenFieldset Text="Contact Info">
                 <RadzenTabs SelectedIndex="0">
                     <Tabs>
-                        <div>
-                            <div class="row avatar">
-                                <div class="col-md-4 align-items-center d-flex">
+                    <div>
+                        <div class="row avatar">
+                            <div class="col-md-4 align-items-center d-flex">
+                                
+                                <label for="file-upload" class="custom-file-upload">
                                     <img src=@imageSource width="200" height="200">
-                                    @* <div class="file-input-zone"> *@
-                                    @* change *@
-                                    <InputFile OnChange="@LoadFiles"/>
-                                    @* </div> *@
-
-                                </div>
+                                           
+                                </label>
+                                <input id="file-upload" type="file" hidden="hidden"/>
+                                   <InputFile OnChange=@LoadFiles>     </InputFile> 
                             </div>
-                            <div class="row">
+                         </div>
+                        <div class="row">
                                 <div class="col-md-4 align-items-center d-flex">
                                     <RadzenLabel Text="Name"/>
                                 </div>
@@ -85,6 +87,8 @@
 
 @code {
     User newUser = new User("example", "", "", "", "");
+    
+    
     public string FName;
     public string LName;
     public string Email;
@@ -109,6 +113,20 @@
         try
         {
             User otherUser = new User(FName, LName, Email, Pwd, imageSource);
+
+            // ValidationContext context = new ValidationContext(otherUser);
+            // ICollection<ValidationResult> validationResults = new List<ValidationResult>();
+
+            // bool isValid = Validator.TryValidateObject(otherUser, context, validationResults, true);
+
+             // Console.WriteLine(isValid);
+
+             // foreach (var VARIABLE in validationResults) {
+                 // Console.WriteLine(VARIABLE.ErrorMessage);
+                
+             // }
+            // validate here
+            
             await userDao.AddUserAsync(otherUser);
         }
         catch (Exception e)
@@ -117,6 +135,7 @@
             return;
         }
         
+    
         NavMgr.NavigateTo("/Users");
     }
 
@@ -167,7 +186,8 @@
             Console.WriteLine("done");
             string base64ImageRepresentation = Convert.ToBase64String(data);
             Console.WriteLine(base64ImageRepresentation);
-            this.imageSource = $"/images/temp/{e.File.Name}";
+            this.imageSource = string.Format("data:image/jpeg;base64,{0}", base64ImageRepresentation);
+            // this.imageSource = $"/images/temp/{e.File.Name}";
 // Console.WriteLine("Hola");
            
             

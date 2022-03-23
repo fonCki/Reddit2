@@ -14,10 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
+builder.Services.AddServerSideBlazor().AddHubOptions((options => {
+    options.MaximumReceiveMessageSize = 1000 * 1024 * 1024;
+} ));
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<JsonContext>();
 builder.Services.AddScoped<IUserDAO, JsonUserDAO>();
+builder.Services.AddScoped<IPostDAO, JsonPostDAO>();
 builder.Services.AddScoped<AuthenticationStateProvider, SimpleAuthenticationStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthServiceImpl>();
 

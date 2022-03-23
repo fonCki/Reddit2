@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Entities.Model;
 
 public class User {
-    public User() { }
+     public User() { }
 
     public User(string email, string password)
     {
@@ -20,16 +20,14 @@ public class User {
         ImagePath = imgPath;
     }
 
-    [Required(ErrorMessage = "name is required")]
-    [NotNull]
-    // [MinLength(1, ErrorMessage = "name cannot be blank")]
+    
     public string FirstName { get; set; }
+
     public string LastName { get; set; }
+
     public string Email { get; set; }
+
     public string Password { get; set; }
-    
     public string ImagePath { get; set; }
-    
-    
     
 }

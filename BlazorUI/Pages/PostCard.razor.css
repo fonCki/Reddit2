@@ -1,0 +1,17 @@
+.writing-area {
+    padding: 10px;
+    background-color: #fffbfb;
+    margin: 20px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+span {
+    margin: 10px;
+}
+
+.full-card {
+    cursor: pointer;
+}

@@ -96,10 +96,10 @@ public class AuthServiceImpl : IAuthService {
         List<Claim> claims = new()
         {
             new Claim(ClaimTypes.Name, user.FirstName),
+            new Claim("lastName", user.LastName),
              new Claim("email", user.Email),
-             new Claim("photo", user.ImagePath),
-            // new Claim("BirthYear", user.BirthYear.ToString()),
-            // new Claim("Domain", user.Domain)
+             new Claim("pwd", user.Password),
+             new Claim("photo", user.ImagePath)
         };
 
         return new ClaimsIdentity(claims, "apiauth_type");

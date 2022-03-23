@@ -1,0 +1,15 @@
+.main-box {
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*flex-direction: column;*/
+    /*background-color: #ff3215;*/
+    width: 75%;
+    /*margin: 0;*/
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    /*background-color: #0dcaf0;*/
+text-align: center;
+}

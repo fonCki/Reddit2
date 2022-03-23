@@ -54,3 +54,14 @@
 .input-file {
     display: none;
 }
+
+.select-button {
+    background-color: #0f5132;
+    visibility: hidden;
+    display: none;
+    color: #0f5132;
+}
+
+#input_file {
+    color: #0dcaf0;
+}

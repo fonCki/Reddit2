@@ -1,0 +1,54 @@
+@page "/ShowPost/{postId}"
+@using Application.Contracts
+@using Entities.Model
+@using Microsoft.AspNetCore.Components
+@inject IPostDAO postDao
+<h3>ShowPost</h3>
+
+<AuthorizeView>
+    <Authorized>
+        <RadzenCard class="m-3">
+            <div class="row">
+                <div class="title">
+                    @* <RadzenTextBox Placeholder="Title"@bind-Value=@Post.Header MaxLength="300" Class="w-100"/> *@
+                    <H2>@Post.Header</h2>
+                </div>
+                    <div class="col-4 body">
+                        <RadzenHtmlEditor PlaceHolder="Text (optional)" @bind-Value=@Post.Body style="height: 500px; margin-bottom: 1rem;" Disabled="true" >
+                        <RadzenHtmlEditorRemoveFormat />
+                        </RadzenHtmlEditor>
+                    </div>
+                <div class="col-4 photo-area">
+                    <img src=@Post.Image width="350" height="350">
+                    @* <div> *@
+                    @*     <RadzenCard> *@
+                    @*         $1$ <h4 class="mb-4">Upload your photo</h4> #1# *@
+                    @*         <RadzenFileInput @bind-Value=@Post.Image TValue="string" Class="w-100"/> *@
+                    @*     </RadzenCard> *@
+                    @* </div>     *@
+                    @* <div class="submit"> *@
+                    @*     <RadzenButton ButtonType="ButtonType.Submit" Text="Submit"/> *@
+                    @* </div> *@
+                </div>
+                <div class="col-4 comments">
+                    
+                </div>
+            </div>
+      </RadzenCard>  
+    </Authorized>
+    <NotAuthorized>
+        <p>You must be logged in to post</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+    public Post Post;
+    [Parameter]
+    public string postId { get; set; }
+
+    protected override async Task OnInitializedAsync() {
+        Post = await postDao.GetPost(postId);
+    }
+
+}

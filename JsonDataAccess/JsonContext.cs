@@ -38,7 +38,9 @@ public class JsonContext  {
     private void CreateFile()
     {
         forum = new ForumContainer();
-        forum.Users.Add(new User("jorge", "Jorge123"));
+        User user = new User("jorge", "Jorge123");
+        forum.Users.Add(user);
+        forum.Posts.Add(new Post("header", "this is abody", user, ""));
         Task.FromResult(SaveChangesAsync());
     }
 
