@@ -2,6 +2,7 @@
 @using Application.Contracts
 @using Entities.Model
 @using Microsoft.AspNetCore.Components
+@using System.Security.Claims
 @inject IPostDAO postDao
 <h3>ShowPost</h3>
 @* *@
@@ -10,28 +11,34 @@
         <RadzenCard class="m-3">
             <div class="row">
                 <div class="title">
+                    
                     @* <RadzenTextBox Placeholder="Title"@bind-Value=@Post.Header MaxLength="300" Class="w-100"/> *@
                     <H2>@Post.Header</h2>
                 </div>
-                    <div class="col-5 body col">
-                        <RadzenHtmlEditor PlaceHolder="Text (optional)" @bind-Value=@Post.Body style="height: 500px; margin-bottom: 1rem;" Disabled="true" >
+                <div  class="col-6 body col">
+                    <RadzenHtmlEditor PlaceHolder="Text (optional)" @bind-Value=@Post.Body style="height: 500px; margin-bottom: 1rem;" Disabled="true" >
                         <RadzenHtmlEditorRemoveFormat />
-                        </RadzenHtmlEditor>
-                    </div>
-                <div class="col-4 photo-area col">
-                    <img src=@Post.Image width="350" height="350">
-                    @* <div> *@
-                    @*     <RadzenCard> *@
-                    @*         $1$ <h4 class="mb-4">Upload your photo</h4> #1# *@
-                    @*         <RadzenFileInput @bind-Value=@Post.Image TValue="string" Class="w-100"/> *@
-                    @*     </RadzenCard> *@
-                    @* </div>     *@
-                    @* <div class="submit"> *@
-                    @*     <RadzenButton ButtonType="ButtonType.Submit" Text="Submit"/> *@
-                    @* </div> *@
+                    </RadzenHtmlEditor>
                 </div>
-                <div class="col-3 comments col">
-                    
+                <div class="col-6  col">
+                    @if (Post.Image != null) {
+                        <div class="photo-area">
+                            <img src=@Post.Image width="350" height="350">
+                            @* <div> *@
+                            @*     <RadzenCard> *@
+                            @*         $1$ <h4 class="mb-4">Upload your photo</h4> #1# *@
+                            @*         <RadzenFileInput @bind-Value=@Post.Image TValue="string" Class="w-100"/> *@
+                            @*     </RadzenCard> *@
+                            @* </div>     *@
+                            @* <div class="submit"> *@
+                            @*     <RadzenButton ButtonType="ButtonType.Submit" Text="Submit"/> *@
+                            @* </div> *@
+                        </div>
+                    }
+                    <div class="comments col" style="@((Post.Image == null) ? "height: 100%" : "height: 50%")">
+                        <CommentComponent Comment="acooment"></CommentComponent>
+                        <RadzenTextArea Style="resize: none;" Placeholder="Enter your comment..." MaxLength="144" Change=@(args => OnChange(args, "TextArea with placeholder")) Class="w-100"/>
+                    </div>
                 </div>
             </div>
       </RadzenCard>  
@@ -47,8 +54,24 @@
     [Parameter]
     public string postId { get; set; }
 
+    public Comment acooment;
+
+
+
+    private void OnChange(string args, string textareaWithPlaceholder) {
+        throw new NotImplementedException();
+    }
+    
+    
     protected override async Task OnInitializedAsync() {
-        Post = await postDao.GetPost(postId);
+
+
+
+
+        User myUser = new User("Hugo", "Brogilio", "Hugo@gmail.com", "hugo123", null);
+
+            Post = await postDao.GetPost(postId);
+        acooment = new Comment("OREM IPOREM IPSUM is a growth partner, and growth involves challenges. New customers, new revenue, efficient conversion, scalability, and meticulous execution of design and technology are what we care about. The road forward is filled with turbulence. Choose growth, or choose another agency. Scooter Land. Project's Description.SUM is a growth partner, and growth involves challenges. New customers, new revenue, efficient conversion, scalability, and meticulous execution of design and technology are what we care about. The road forward is filled with turbulence. Choose growth, or choose another agency. Scooter Land. Project's Description.", myUser);
     }
 
 }

@@ -43,7 +43,7 @@
 
 @code {
 
-    private string postImage;
+    private string? postImage;
     private string body;
     private string title;
     private User myUser;
@@ -58,7 +58,6 @@
     protected override async Task OnInitializedAsync() {
         body = "";
         title = "";
-        postImage = "";
         
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal user = authState.User;
@@ -73,12 +72,10 @@
             (user.Claims.First(c => "lastName".Equals(c.Type))).Value,
             user.Claims.First(c => "photo".Equals(c.Type)).Value);
     }
-
-
-
+    
     async Task OnSend() {
         try {
-            Post post = new Post(title, body, myUser, postImage);
+            Post post = new Post(getUID(),title, body, myUser, postImage, DateTime.Now);
             await postDao.AddPost(post);
         }
         catch (Exception e) {
@@ -88,8 +85,6 @@
 
     }
     
-    
-
     void OnPaste(HtmlEditorPasteEventArgs args) {
         string post = args.Html;
     // console.Log($"Paste: {args.Html}");
@@ -113,5 +108,13 @@
     void OnError(UploadErrorEventArgs args, string name)
     {
         //console.Log($"{args.Message}");
+    }
+    
+    private string getUID() { // Change this please
+        string tempUID = DateTimeOffset.Now.ToUnixTimeSeconds().ToString() + "&"; 
+        for (int i = 0; i < 6; i++) {
+            tempUID += new Random().Next(10);
+        }
+        return tempUID;
     }
 }

@@ -1,10 +1,10 @@
-using System.Text.Json;
-using Application.Contracts;
+﻿using System.Text.Json;
 using Entities.Model;
 
-namespace JsonDataAccess; 
+namespace JsonDataAccess.Context;
 
-public class JsonContext  {
+public class JsonContext
+{
     private string forumPath = "forum.json";
 
     private ForumContainer? forum;
@@ -31,16 +31,12 @@ public class JsonContext  {
         else
         {
             CreateFile();
-            Console.WriteLine("created");
         }
     }
 
     private void CreateFile()
     {
         forum = new ForumContainer();
-        User user = new User("jorge", "Jorge123");
-        forum.Users.Add(user);
-        forum.Posts.Add(new Post("header", "this is abody", user, ""));
         Task.FromResult(SaveChangesAsync());
     }
 
@@ -59,7 +55,5 @@ public class JsonContext  {
         });
         await File.WriteAllTextAsync(forumPath,forumAsJson);
         forum = null;
-    }
-    
-    
+	}
 }
