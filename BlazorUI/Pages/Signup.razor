@@ -8,7 +8,7 @@
 @inject NavigationManager NavMgr
 
 
-<RadzenTemplateForm Data="@newUser"  Submit="@((User args) => { Submit(args); })">
+<RadzenTemplateForm Data="@newUser" Submit="@((User args) => { Submit(args); })" xmlns="http://www.w3.org/1999/html">
     <div class="row justify-content-center">
         <div class="col-md-6 big-box">
             <RadzenFieldset Text="Contact Info">
@@ -17,13 +17,10 @@
                     <div>
                         <div class="row avatar">
                             <div class="col-md-4 align-items-center d-flex">
-                                
                                 <label for="file-upload" class="custom-file-upload">
                                     <img src=@imageSource width="200" height="200">
-                                           
+                                    <InputFile id="file-upload" OnChange=@LoadFiles class="input-file" hidden=""/>
                                 </label>
-                                <input id="file-upload" type="file" hidden="hidden"/>
-                                   <InputFile OnChange=@LoadFiles>     </InputFile> 
                             </div>
                          </div>
                         <div class="row">

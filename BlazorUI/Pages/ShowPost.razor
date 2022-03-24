@@ -4,21 +4,21 @@
 @using Microsoft.AspNetCore.Components
 @inject IPostDAO postDao
 <h3>ShowPost</h3>
-
-<AuthorizeView>
-    <Authorized>
+@* *@
+@* <AuthorizeView> *@
+@*     <Authorized> *@
         <RadzenCard class="m-3">
             <div class="row">
                 <div class="title">
                     @* <RadzenTextBox Placeholder="Title"@bind-Value=@Post.Header MaxLength="300" Class="w-100"/> *@
                     <H2>@Post.Header</h2>
                 </div>
-                    <div class="col-4 body">
+                    <div class="col-5 body col">
                         <RadzenHtmlEditor PlaceHolder="Text (optional)" @bind-Value=@Post.Body style="height: 500px; margin-bottom: 1rem;" Disabled="true" >
                         <RadzenHtmlEditorRemoveFormat />
                         </RadzenHtmlEditor>
                     </div>
-                <div class="col-4 photo-area">
+                <div class="col-4 photo-area col">
                     <img src=@Post.Image width="350" height="350">
                     @* <div> *@
                     @*     <RadzenCard> *@
@@ -30,16 +30,16 @@
                     @*     <RadzenButton ButtonType="ButtonType.Submit" Text="Submit"/> *@
                     @* </div> *@
                 </div>
-                <div class="col-4 comments">
+                <div class="col-3 comments col">
                     
                 </div>
             </div>
       </RadzenCard>  
-    </Authorized>
-    <NotAuthorized>
-        <p>You must be logged in to post</p>
-    </NotAuthorized>
-</AuthorizeView>
+@*     </Authorized> *@
+@*     <NotAuthorized> *@
+@*         <p>You must be logged in to post</p> *@
+@*     </NotAuthorized> *@
+@* </AuthorizeView> *@
 
 
 @code {
