@@ -6,7 +6,9 @@
 @inject IPostDAO postDao
 @inject NavigationManager navMgr
 
-<RadzenCard class="m-3">
+<AuthorizeView>
+    <Authorized>
+        <RadzenCard class="m-3">
             <div class="row">
                 <div class="title">
                     <H2>@Post.Header</h2>
@@ -25,8 +27,8 @@
                     <div class="comments-full col" style="@((Post.Image == null) ? "height: 100%" : "height: 50%")">
                         <div class="comments-part ">
                             @foreach (Comment comment in Post.Comments) {
-                                    <CommentComponent Comment="comment"/>
-                                }
+                                <CommentComponent Comment="comment"/>
+                            }
                         </div>
                         <div class="writing-area">
                             <RadzenTextArea Style="resize: none;" Placeholder="Enter your comment..." MaxLength="144" @bind-Value="comment" onKeyPress="" Class="w-100" />
@@ -35,8 +37,12 @@
                     </div>
                 </div>
             </div>
-      </RadzenCard>
-
+        </RadzenCard>
+    </Authorized>
+    <NotAuthorized>
+        <p>LOG IN FIRST MATE! I TOLD YOU, IT'S NOT WORKING PERFECTLY</p>
+    </NotAuthorized>
+</AuthorizeView>
 @code {
     public Post Post;
     public bool isLoggedIn;
@@ -48,8 +54,7 @@
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = null!;
-
-
+    
     private void Submit() {
         if (!this.comment.Equals("")) {
             Comment comment = new Comment(this.comment, myUser);
