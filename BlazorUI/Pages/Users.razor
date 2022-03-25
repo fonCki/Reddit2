@@ -13,7 +13,7 @@
 else if (!users.Any())
 {
     <p>
-        <em>No ToDo items exist. Please add some.</em>
+        <em>not users id Database. Please create account.</em>
     </p>
 }
 else
@@ -21,7 +21,7 @@ else
     <table class="table">
         <thead>
         <tr>
-            <th>Name</th> <th>Last Name</th> <th>Mail</th> <th>Password</th>
+            <th>Name</th> <th>Last Name</th> <th>Mail</th> <th>Password</th><th>Photo</th>
         </tr>
         </thead>
         <tbody>
@@ -32,6 +32,7 @@ else
                 <td>@user.LastName</td>
                 <td>@user.Email</td> 
                 <td>@user.Password</td>
+                <td>@((user.ImagePath == null) ? "True" : "False")</td>
             </tr>
         }
         </tbody>

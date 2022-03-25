@@ -8,9 +8,7 @@
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Mvc
 
-
 <h1>WRITE YOUR POST</h1>
-
 <AuthorizeView>
     <Authorized>
         <RadzenCard class="m-3">
@@ -75,14 +73,14 @@
     
     async Task OnSend() {
         try {
-            Post post = new Post(getUID(),title, body, myUser, postImage, DateTime.Now);
+            Post post = new Post(getUID(),title, body, myUser, postImage, DateTime.Now, new List<Vote>(), new List<Comment>());
             await postDao.AddPost(post);
         }
         catch (Exception e) {
             Console.WriteLine(e);
             throw;
         }
-
+        navMgr.NavigateTo("/");
     }
     
     void OnPaste(HtmlEditorPasteEventArgs args) {

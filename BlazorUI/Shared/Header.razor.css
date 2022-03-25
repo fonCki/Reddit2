@@ -12,6 +12,7 @@ img {
     position: fixed;
     /*background-color: yellow;*/
     width: 100%;
+    cursor: pointer;
 }
 
 button {

@@ -29,10 +29,10 @@ public class JsonPostDAO : IPostDAO{
     public async Task<Post> AddComent(string UID, Comment comment) {
         Post? post = GetPost(UID).Result;
         if (post != null) {
+            Console.WriteLine("To aca");
             post.Comments.Add(comment);
-            jsonContext.SaveChangesAsync();
+            await jsonContext.SaveChangesAsync();
         }
-
         return null;
     }
 }

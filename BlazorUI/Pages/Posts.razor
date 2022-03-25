@@ -4,11 +4,11 @@
 @inject IPostDAO postDao
 
 <div class="container">
-<div class="main-box">
-    @foreach (var post in posts) {
-        <PostCard Post="post" />
-    }
-</div>
+    <div class="main-box">
+        @foreach (var post in posts) {
+            <PostCard Post="post" />
+        }
+    </div>
 </div>
 
 @code {
@@ -16,8 +16,6 @@
     byte[] documentContent;
     protected override async Task OnInitializedAsync() {
         posts = await postDao.GetAllPostAsync();
-        // DxRichEdit richEdit;
-        // documentContent = await File.ReadAllBytesAsync(Path.Combine(AppContext.BaseDirectory, Path.Combine("Data", "Documents", "AlbertEinstein.docx")));
         await base.OnInitializedAsync();
     }
 }

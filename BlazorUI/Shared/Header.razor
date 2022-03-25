@@ -3,9 +3,9 @@
 @inject NavigationManager navMgr
 @inject IAuthService authService
 
-<div class="container one">
+<div class="container one" >
     <div class="row">
-        <div class="col-3 my-auto d-flex cone">
+        <div class="col-3 my-auto d-flex cone" onclick="@Home">
             <img src="images/reddit-1-logo-png-transparent.png" max-width:10px alt="Image">
         </div>
         <div class="col-5 text-center cone">
@@ -66,4 +66,7 @@
             navMgr.NavigateTo("/SignUp");
         }
         
+        private void Home() {
+            navMgr.NavigateTo("/");
+        }
 }

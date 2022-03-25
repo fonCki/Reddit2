@@ -116,6 +116,7 @@
         Pwd = user.Claims.First(c => "pwd".Equals(c.Type)).Value;
         RePwd = user.Claims.First(c => "pwd".Equals(c.Type)).Value;
         Image = user.Claims.First(c => "photo".Equals(c.Type)).Value;
+        imageSource = string.Format(user.Claims.First(c => "photo".Equals(c.Type)).Value);
         LoogedIn = true;
     }
 
