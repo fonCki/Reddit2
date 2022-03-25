@@ -6,8 +6,7 @@
 @inject IPostDAO postDao
 @inject NavigationManager navMgr
 
-<AuthorizeView>
-    <Authorized>
+
         <RadzenCard class="m-3">
             <div class="row">
                 <div class="title">
@@ -31,18 +30,14 @@
                             }
                         </div>
                         <div class="writing-area">
-                            <RadzenTextArea Style="resize: none;" Placeholder="Enter your comment..." MaxLength="144" @bind-Value="comment" onKeyPress="" Class="w-100" />
-                            <RadzenButton class="submit" Text="Submit" Click="Submit"></RadzenButton>
+                            <RadzenTextArea Style="resize: none;" Placeholder="Enter your comment..." MaxLength="144" @bind-Value="comment" onKeyPress="" Class="w-100" Disabled=@(isLoggedIn ? false : true)/>
+                            <RadzenButton class="submit" Text="Submit" Click="Submit" Disabled=@(isLoggedIn ? false : true)></RadzenButton>
                         </div>
                     </div>
                 </div>
             </div>
         </RadzenCard>
-    </Authorized>
-    <NotAuthorized>
-        <p>LOG IN FIRST MATE! I TOLD YOU, IT'S NOT WORKING PERFECTLY</p>
-    </NotAuthorized>
-</AuthorizeView>
+
 @code {
     public Post Post;
     public bool isLoggedIn;
@@ -69,7 +64,7 @@
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal user = authState.User;
         isLoggedIn = user.Identity != null;
-        
+        Post = await postDao.GetPost(postId);
         if (!isLoggedIn) return;
         
         myUser = new User(user.Identity.Name,
@@ -78,6 +73,6 @@
             (user.Claims.First(c => "pwd".Equals(c.Type))).Value,
             user.Claims.First(c => "photo".Equals(c.Type)).Value);
         
-        Post = await postDao.GetPost(postId);
+        
     }
 }
