@@ -1,11 +1,6 @@
-using System.Security.Claims;
+
 using Application.Contracts;
-using Blazorise;
-using Blazorise.Bootstrap;
 using BlazorUI.Authentication;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using BlazorUI.Data;
 using JsonDataAccess;
 using JsonDataAccess.Context;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -18,7 +13,6 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor().AddHubOptions((options => {
     options.MaximumReceiveMessageSize = 1000 * 1024 * 1024;
 } ));
-builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<JsonContext>();
 builder.Services.AddScoped<IUserDAO, JsonUserDAO>();
 builder.Services.AddScoped<IPostDAO, JsonPostDAO>();

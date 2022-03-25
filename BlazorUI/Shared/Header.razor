@@ -11,17 +11,10 @@
         <div class="col-5 text-center cone">
             <input class="form-control me-2" type="search" placeholder="Search Reddit2" aria-label="Search">
         </div>
-        @* <div class="col 3"></div> *@
-        
         <div class="col-4 text-right cone">
             <div class="container">
                 <div class="row justify-content-end">
                     <AuthorizeView>
-                        <Authorized>
-                            <div class="col-4">
-                                <button type="button" class="btn btn-outline-primary" @onclick="@LogOut">LogOut</button>
-                            </div>
-                        </Authorized>
                         <NotAuthorized>
                             <div class="col-4">
                                 <button type="button" class="btn btn-outline-primary" @onclick="@LogIn">Log In</button>
@@ -32,22 +25,24 @@
                         </NotAuthorized>
                     </AuthorizeView>
                     <div class="col-4">
-                        @* <RadzenCard Style="margin-bottom: 200px; width: fit-content; min-width: 300px;" Class="mt-5 mx-auto text-right"> *@
                         <RadzenProfileMenu >
                             <Template>
                                 <Avatar />
-                                @* <RadzenGravatar Email="u@eddgample.cbbbom"> *@
-                                @* </RadzenGravatar > *@
                             </Template>
-                                <ChildContent>
-                                    <RadzenProfileMenuItem Text="Buttons" Path="buttons" Icon="account_circle"></RadzenProfileMenuItem>
-                                    <RadzenProfileMenuItem Text="Menu" Path="menu" Icon="line_weight"></RadzenProfileMenuItem>
-                                    <RadzenProfileMenuItem Text="FileInput" Path="fileinput" Icon="attach_file"></RadzenProfileMenuItem>
-                                    <RadzenProfileMenuItem Text="Dialog" Path="dialog" Icon="perm_media"></RadzenProfileMenuItem>
-                                    <RadzenProfileMenuItem Text="Notification" Path="notification" Icon="announcement"></RadzenProfileMenuItem>
-                                </ChildContent>
+                            <ChildContent>
+                                <AuthorizeView>
+                                    <NotAuthorized>
+                                        <RadzenProfileMenuItem Text="home" Path="/" Icon="home"></RadzenProfileMenuItem>
+                                    </NotAuthorized>
+                                    <Authorized>
+                                        <RadzenProfileMenuItem Text="Create Post" Path="CreatePost" Icon="post_add"></RadzenProfileMenuItem>
+                                        <RadzenProfileMenuItem Text="Users" Path="users" Icon="people"></RadzenProfileMenuItem> @* delete this *@
+                                        <RadzenProfileMenuItem Text="Settings" Path="SignUp" Icon="settings"></RadzenProfileMenuItem>
+                                        <RadzenProfileMenuItem Text="LogOut" Path="LogOut" Icon="logout"></RadzenProfileMenuItem>
+                                    </Authorized>
+                                </AuthorizeView>
+                            </ChildContent>
                             </RadzenProfileMenu>
-                        @* </RadzenCard> *@
                     </div>
                 </div>
             </div>
@@ -71,7 +66,4 @@
             navMgr.NavigateTo("/SignUp");
         }
         
-        private void LogOut() {
-            authService.LogoutAsync();
-        }
 }

@@ -1,9 +1,7 @@
 @page "/Login"
 @inject NavigationManager navMgr
 
-@using Application.Contracts
 @using BlazorUI.Authentication
-@using Entities.Model
 @inject IAuthService authService
 
 <div class="container">
@@ -26,11 +24,9 @@
 
 
 @code {
-    string userName = "admin";
-    string password = "admin";
+    
     string errorLabel;
-
-
+    
     private async Task OnLogin(LoginArgs args, string name) {
         errorLabel = "";
         try {
@@ -44,11 +40,11 @@
 
     void OnRegister(string name)
     {
+        
     navMgr.NavigateTo("/SignUp");
     }
 
     void OnResetPassword(string value, string name)
     {
-    //  console.Log($"{name} -> ResetPassword for user: {value}");
     }
 }

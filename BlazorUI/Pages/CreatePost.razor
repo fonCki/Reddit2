@@ -69,7 +69,7 @@
         myUser = new User(user.Identity.Name,
             user.Claims.First(c => "lastName".Equals(c.Type)).Value,
             user.Claims.First(c => "email".Equals(c.Type)).Value,
-            (user.Claims.First(c => "lastName".Equals(c.Type))).Value,
+            (user.Claims.First(c => "pwd".Equals(c.Type))).Value,
             user.Claims.First(c => "photo".Equals(c.Type)).Value);
     }
     

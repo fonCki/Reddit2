@@ -1,11 +1,11 @@
 @using Entities.Model
 
-<RadzenCard class="m-1 p-2">
+<RadzenCard class="m-0 p-1 border-0 shadow-none">
     <div class="d-flex flex-row">
         <RadzenImage Path="/images/-user-login.png" Class="rounded-circle float-left mr-3" Style="width: 50px; height: 50px;"/>
         <div class="content m-0 p-0">
             <div>
-                <p><i><b>@Comment.WrittenBy.FirstName</b></i></p>
+                <p class=""><i><b>@Comment.WrittenBy.FirstName</b></i></p>
                 <p>@Comment.Body</p>
             </div>
             <div>
