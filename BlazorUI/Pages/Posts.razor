@@ -1,7 +1,4 @@
-@page "/Posts"
-@using Application.Contracts
 @using Entities.Model
-@inject IPostDAO postDao
 
 <div class="container">
     <div class="main-box">
@@ -12,11 +9,12 @@
 </div>
 
 @code {
-    public ICollection<Post> posts;
-    byte[] documentContent;
+
+    [Parameter]
+    public IEnumerable<Post> posts { get; set; }
+
     protected override async Task OnInitializedAsync() {
-        posts = await postDao.GetAllPostAsync();
         await base.OnInitializedAsync();
     }
-}
 
+}

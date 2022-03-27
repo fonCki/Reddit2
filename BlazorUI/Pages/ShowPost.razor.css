@@ -5,6 +5,7 @@
     padding: 0;
     /*background-color: #0b5ed7;*/
     border-radius: 8px;
+    display: flex;
 }
 
 .photo-area {
@@ -45,9 +46,15 @@ img {
 }
 
 .writing-area {
-    
     display: flex;
     align-items: center;
+}
+
+.vote {
+    /*background-color: #3b9550;*/
+    width: 350px;
+    text-align: center;
+    /*padding-top: 10px;*/
 }
 
 

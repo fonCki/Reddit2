@@ -15,6 +15,7 @@
             <div class="row">
                 <div class="title">
                     <RadzenTextBox Placeholder="Title"@bind-Value=@title MaxLength="300" Class="w-100"/>
+                    
                 </div>
                     <div class="col-7 body">
                         <RadzenHtmlEditor PlaceHolder="Text (optional)" @bind-Value=@body style="height: 500px; margin-bottom: 1rem;" Change=@OnChange Paste=@OnPaste Execute=@OnExecute/>

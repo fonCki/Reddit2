@@ -1,0 +1,9 @@
+.main-box {
+    width: 75%;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}

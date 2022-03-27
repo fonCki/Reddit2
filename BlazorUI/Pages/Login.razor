@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-12  col-xl-5 main-box">
+        <div class="col-12  col-xl-5 main-box text-center">
             <RadzenCard>
                 <h2 class="mb-4">Register and password reset</h2>
                 <RadzenTemplateForm Data=@("LoginWithRegisterAndReset")>
@@ -14,7 +14,7 @@
                                  ResetPassword=@(args => OnResetPassword(args, "Login with register and password reset"))
                                  Register=@(args => OnRegister("Login with register and password reset"))/>
                 </RadzenTemplateForm>
-                <p>@errorLabel</p>
+                <p style="color: red">@errorLabel</p>
             </RadzenCard>
         </div>
     </div>

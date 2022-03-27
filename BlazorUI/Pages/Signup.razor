@@ -9,18 +9,17 @@
 @inject NavigationManager NavMgr
 
 
-<RadzenTemplateForm Data="@newUser" Submit="@((User args) => { Submit(args); })" xmlns="http://www.w3.org/1999/html">
+<RadzenTemplateForm Data="@newUser" Submit="@((User args) => { Submit(args); })">
     <div class="row justify-content-center">
         <div class="col-md-6 big-box">
-            @* <RadzenFieldset Text="Contact Info"> *@
-                  <RadzenFieldset>
+            <RadzenFieldset>
                 <RadzenTabs SelectedIndex="0">
                     <Tabs>
                     <div>
                         <div class="row avatar">
                             <div class="col-md-4 align-items-center d-flex">
                                 <label for="file-upload" class="custom-file-upload">
-                                    <img src=@imageSource width="200" height="200">
+                                    <img src=@Image width="200" height="200">
                                     <InputFile id="file-upload" OnChange=@LoadFiles class="input-file" hidden=""/>
                                 </label>
                             </div>
@@ -30,7 +29,8 @@
                                     <RadzenLabel Text="Name"/>
                                 </div>
                                 <div class="col-md-8">
-                                    <RadzenTextBox style="width: 100%;" Name="Fname" @bind-Value="FName"/>
+                                    <RadzenTextBox style="width: 100%;" Name="FirstName" @bind-Value="FName"/>
+                                    <RadzenRequiredValidator Component="FirstName" Text="First name is required" Popup=true Style="position: absolute"/>
                                 </div>
                             </div>
                             <div class="row">
@@ -40,6 +40,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <RadzenTextBox style="width: 100%;" Name="LastName" @bind-Value="LName"/>
+                                    <RadzenRequiredValidator Component="LastName" Text="Last name is required" Popup=true Style="position: absolute"/>
                                 </div>
                             </div>
                             <div class="row">
@@ -47,7 +48,10 @@
                                     <RadzenLabel Text="Email"/>
                                 </div>
                                 <div class="col-md-8">
-                                    <RadzenTextBox style="width: 100%;"  Name="EMail" @bind-Value="Email" Disabled=@(LoogedIn ? true : false)/>
+                                    <RadzenTextBox style="width: 100%;"  Name="Email" @bind-Value="Email" Disabled=@(LoogedIn ? true : false)/>
+                                    <RadzenRequiredValidator Component="Email" Text="Email is required" Popup=true Style="position: absolute" />
+                                    <RadzenEmailValidator Component="Email" Text="Provide a valid email address" Popup=true Style="position: absolute" />
+
                                 </div>
                             </div>
                             <div class="row">
@@ -55,15 +59,19 @@
                                     <RadzenLabel Text="Password"/>
                                 </div>
                                 <div class="col-md-8">
-                                    <RadzenTextBox style="width: 100%;" type="password" Name="Pwd" @bind-Value="Pwd"/>
+                                    <RadzenPassword style="display: block" Name="Password" @bind-Value=@Pwd Class="w-100" />
+                                    <RadzenRequiredValidator Component="Password" Text="Enter password" Popup=true Style="position: absolute" />
+                                  
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4 align-items-center d-flex">
-                                    <RadzenLabel Text="re-Password"/>
+                                    <RadzenLabel Text="Repeat Password"/>
                                 </div>
                                 <div class="col-md-8">
-                                    <RadzenTextBox style="width: 100%;" type="password" Name="RePwd" @bind-Value="RePwd" Change="@Eval"/>
+                                    <RadzenPassword style="display: block" Name="RepeatPassword" @bind-Value=@RePwd  Class="w-100" />
+                                    <RadzenRequiredValidator Component="RepeatPassword" Text="Repeat your password" Popup=true Style="position: absolute" />
+                                    <RadzenCompareValidator Visible=@(!string.IsNullOrEmpty(RePwd)) Value=@Pwd Component="RepeatPassword" Text="Passwords should be the same" Popup=true Style="position: absolute" />
                                 </div>
                             </div>
                         </div>
@@ -91,19 +99,18 @@
     
     
     User newUser = new User("example", "", "", "", "");
+    
     public string FName;
     public string LName;
     public string Email;
     public string Pwd;
-    public string Image { get; set; }
-    
+    public string Image { get; set; } = "/images/-user-login.png";
     public string RePwd { get; set; }
-    private string imageSource = "/images/temp/-user-login.png";
 
-    Boolean LoogedIn = false;
+    bool LoogedIn = false;
     private string errorLabel = "";
 
-
+    
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthState;
@@ -115,14 +122,13 @@
         Email = user.Claims.First(c => "email".Equals(c.Type)).Value;
         Pwd = user.Claims.First(c => "pwd".Equals(c.Type)).Value;
         RePwd = user.Claims.First(c => "pwd".Equals(c.Type)).Value;
-        Image = user.Claims.First(c => "photo".Equals(c.Type)).Value;
-        imageSource = string.Format(user.Claims.First(c => "photo".Equals(c.Type)).Value);
+        Image = string.Format(user.Claims.First(c => "photo".Equals(c.Type)).Value);
         LoogedIn = true;
     }
 
     private async Task Submit(User arg) {
         try {
-            User newUser = new User(FName, LName, Email, Pwd, imageSource);
+            User newUser = new User(FName, LName, Email, Pwd, Image);
             await ((LoogedIn) ? userDao.UpdateUserAsync(newUser) : userDao.AddUserAsync(newUser));
         }
         catch (Exception e)
@@ -130,20 +136,11 @@
             errorLabel = e.Message;
             return;
         }
-        NavMgr.NavigateTo("/");
+        NavMgr.NavigateTo("/", forceLoad:true);
     }
 
     void Cancel() {
-        NavMgr.NavigateTo("/");
-    }
-
-    private async Task Eval() {
-        if (!RePwd.Equals(Pwd)) {
-            errorLabel = "Passwords must be equals";
-        }
-        else {
-            errorLabel = "";
-        }
+        NavMgr.NavigateTo("/", forceLoad:true);
     }
 
     private bool Error() {
@@ -176,7 +173,7 @@
             Console.WriteLine("done");
             string base64ImageRepresentation = Convert.ToBase64String(data);
             Console.WriteLine(base64ImageRepresentation);
-            this.imageSource = string.Format("data:image/jpeg;base64,{0}", base64ImageRepresentation);
+            Image = string.Format("data:image/jpeg;base64,{0}", base64ImageRepresentation);
         }
         catch (Exception ex)
         { }

@@ -1,7 +1,10 @@
 @using BlazorUI.Authentication
+@using Application.Contracts
+@using Entities.Model
 
 @inject NavigationManager navMgr
 @inject IAuthService authService
+@inject IPostDAO postDao
 
 <div class="container one" >
     <div class="row">
@@ -9,7 +12,9 @@
             <img src="images/reddit-1-logo-png-transparent.png" max-width:10px alt="Image">
         </div>
         <div class="col-5 text-center cone">
-            <input class="form-control me-2" type="search" placeholder="Search Reddit2" aria-label="Search">
+            <RadzenAutoComplete Data=@posts TextProperty="Header" FilterCaseSensitivity=FilterCaseSensitivity.CaseInsensitive placeholder="Search Reddit2" Change=@(args => OnChange(args, "AutoComplete")) Style="width: 100%;"/>
+            
+            @* <input class="form-control me-2" type="search" placeholder="Search Reddit2" aria-label="Search"> *@
         </div>
         <div class="col-4 text-right cone">
             <div class="container">
@@ -51,13 +56,15 @@
     </div>
 </div>
 
-    @code {
-        
-     List<string> list = new List<string>{ ".NET", "Python","Java" }; 
-          private void OnSelected(string selection)
-          {
-            Console.WriteLine(selection);
-          }
+@code {
+    
+    public IEnumerable<Post> posts;
+    public string Search { get; set; }
+    
+    protected override async Task OnInitializedAsync() {
+        posts = await postDao.GetAllPostAsync();
+    }
+    
 
         private void LogIn() {
             navMgr.NavigateTo("/LogIn");
@@ -70,4 +77,8 @@
         private void Home() {
             navMgr.NavigateTo("/");
         }
+    
+    void OnChange(object value, string name) {
+        navMgr.NavigateTo($"SearchResults/{(string)value}");
+    }
 }

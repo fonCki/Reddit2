@@ -1,0 +1,23 @@
+@page "/SearchResults/{Search}"
+
+@using Application.Contracts
+@using Entities.Model
+@inject IPostDAO postDao
+
+<Posts posts="posts" />
+
+@code {
+    
+    [Parameter]
+    public string Search { get; set; }
+    public IEnumerable<Post> posts;
+
+    protected override async Task OnInitializedAsync() {
+        ICollection<Post> allPosts = await postDao.GetAllPostAsync();
+        posts = allPosts.Where(p => p.Header.Contains(Search) || 
+                                        p.Body.Contains(Search) ||
+                                        p.WrittenBy.FirstName.Contains(Search) ||
+                                        p.WrittenBy.LastName.Contains(Search));
+
+}
+}   
