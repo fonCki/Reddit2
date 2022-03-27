@@ -23,4 +23,8 @@
       <Content Include="-user-login.png" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\images\temp" />
+    </ItemGroup>
+
 </Project>

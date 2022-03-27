@@ -12,7 +12,6 @@
         <div class="title">
             <H2>@Post.Header</h2>
         </div>
-
         <div class="col-6 body col">
                    <div class="c vote">
                         <span class="oi oi-arrow-circle-top" aria-hidden="true"></span>  
@@ -23,25 +22,25 @@
                 <RadzenHtmlEditorRemoveFormat/>
             </RadzenHtmlEditor>
         </div>
-        <div class="col-6  col">
-            @if (Post.Image != null) {
-                <div class="photo-area" >
-                    <img src=@Post.Image >
-                </div>
-            }
-            <div class="comments-full col" style="@((Post.Image == null) ? "height: 100%" : "height: 50%")">
+        <div class="col-6 last-column">
+            <div class="photo-and-comments">
+                @if (Post.Image != null) {
+                    <div class="photo-area">
+                        <img src=@Post.Image>
+                    </div>
+                }
                 <div class="comments-part ">
                     @foreach (Comment comment in Post.Comments) {
                         <CommentComponent Comment="comment"/>
                     }
                 </div>
+            </div>
                 <div class="writing-area">
                     <RadzenTextArea Style="resize: none;" Placeholder="Enter your comment..." MaxLength="144" @bind-Value="comment" onKeyPress="" Class="w-100" Disabled=@(isLoggedIn ? false : true)/>
                     <RadzenButton class="submit" Text="Submit" Click="Submit" Disabled=@(isLoggedIn ? false : true)></RadzenButton>
                 </div>
             </div>
         </div>
-    </div>
 </RadzenCard>
 
 @code {
