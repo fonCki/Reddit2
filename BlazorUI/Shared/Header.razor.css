@@ -1,6 +1,5 @@
 img {
     height: complex;
-    /*width: 100px;*/
 }
 
 .cone {
@@ -9,8 +8,6 @@ img {
 
 
 .one {
-    position: fixed;
-    /*background-color: yellow;*/
     width: 100%;
     cursor: pointer;
 }
@@ -23,9 +20,4 @@ button {
 
 .drop-menu {
     cursor: pointer;
-    background-color: #0dcaf0;
-}
-
- {
-    /*background-color: #0dcaf0;*/
 }
