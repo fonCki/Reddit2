@@ -9,6 +9,6 @@ public interface IUserDAO {
   public Task<User> GetByUserAsyncByEmail(string email);
   public Task<User> AddUserAsync(User user);
   public Task DeleteUserAsync(string email);
-  public Task UpdateUserAsync(User user);
+  public Task<User> UpdateUserAsync(User user);
     
 }

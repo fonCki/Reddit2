@@ -36,7 +36,7 @@ public class JsonUserDAO : IUserDAO {
         jsonContext.SaveChangesAsync();
     }
 
-    public async Task UpdateUserAsync(User user) {
+    public async Task<User> UpdateUserAsync(User user) {
         var userToUpdate = GetByUserAsyncByEmail(user.Email).Result;
         userToUpdate.FirstName = user.FirstName;
         userToUpdate.LastName = user.LastName;
@@ -44,6 +44,7 @@ public class JsonUserDAO : IUserDAO {
         userToUpdate.Password = user.Password;
         userToUpdate.Password = user.Password;
         await jsonContext.SaveChangesAsync();
+        return userToUpdate;
     }
 
     private async Task<bool> existUser(string email) {

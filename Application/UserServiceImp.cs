@@ -6,29 +6,29 @@ namespace Application;
 
 public class UserServiceImp : IUserService {
     
-    private IUserDAO usertDao;
+    private IUserDAO userDao;
 
     public UserServiceImp(IUserDAO usertDao) {
-        this.usertDao = usertDao;
+        this.userDao = usertDao;
     }
 
     public Task<ICollection<User>> GetUsersAsync() {
-        return usertDao.GetUsersAsync();
+        return userDao.GetUsersAsync();
     }
 
     public Task<User> GetByUserAsyncByEmail(string email) {
-        return usertDao.GetByUserAsyncByEmail(email);
+        return userDao.GetByUserAsyncByEmail(email);
     }
 
     public Task<User> AddUserAsync(User user) {
-        return usertDao.AddUserAsync(user);
+        return userDao.AddUserAsync(user);
     }
 
     public Task DeleteUserAsync(string email) {
-        return usertDao.DeleteUserAsync(email);
+        return userDao.DeleteUserAsync(email);
     }
 
-    public Task UpdateUserAsync(User user) {
-        return usertDao.UpdateUserAsync(user);
+    public Task<User> UpdateUserAsync(User user) {
+        return userDao.UpdateUserAsync(user);
     }
 }
