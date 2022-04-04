@@ -3,9 +3,12 @@
 @using System.Security.Claims
 @using Application.Contracts
 @using Microsoft.AspNetCore.Components
-@inject IPostDAO postDao
+@inject IPostService postService
 @inject NavigationManager navMgr
+@inject IAuthService AuthService
 @using System.Security.Claims
+@using BlazorUI.Authentication
+@using Contracts
 @using Microsoft.AspNetCore.Mvc
 
 <h1>WRITE YOUR POST</h1>
@@ -65,17 +68,13 @@
         if (!isLoggedIn) return;
         
         string name = user.Claims.First(c => "lastName".Equals(c.Type)).Value;
-        myUser = new User(user.Identity.Name,
-            user.Claims.First(c => "lastName".Equals(c.Type)).Value,
-            user.Claims.First(c => "email".Equals(c.Type)).Value,
-            (user.Claims.First(c => "pwd".Equals(c.Type))).Value,
-            user.Claims.First(c => "photo".Equals(c.Type)).Value);
+        myUser = AuthService.MyUser;
     }
     
     async Task OnSend() {
         try {
             Post post = new Post(getUID(),title, body, myUser, postImage, DateTime.Now, new List<Vote>(), new List<Comment>());
-            await postDao.AddPost(post);
+            await postService.AddPost(post);
         }
         catch (Exception e) {
             Console.WriteLine(e);

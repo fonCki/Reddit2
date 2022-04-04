@@ -1,10 +1,11 @@
 @using BlazorUI.Authentication
 @using Application.Contracts
+@using Contracts
 @using Entities.Model
 
 @inject NavigationManager navMgr
 @inject IAuthService authService
-@inject IPostDAO postDao
+@inject IPostService postService
 
 <div class="container one" >
     <div class="row">
@@ -59,13 +60,12 @@
 @code {
     
     public IEnumerable<Post> posts;
-    public string Search { get; set; }
+    public string SearchValue { get; set; }
     
     protected override async Task OnInitializedAsync() {
-        posts = await postDao.GetAllPostAsync();
+        posts = await postService.GetAllPostAsync();
     }
     
-
         private void LogIn() {
             navMgr.NavigateTo("/LogIn");
         }
@@ -80,5 +80,9 @@
     
     void OnChange(object value, string name) {
         navMgr.NavigateTo($"SearchResults/{(string)value}");
+    }
+
+    void doIt() {
+        Console.WriteLine(SearchValue);
     }
 }

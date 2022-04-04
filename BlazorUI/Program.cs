@@ -1,6 +1,8 @@
 
+using Application;
 using Application.Contracts;
 using BlazorUI.Authentication;
+using Contracts;
 using JsonDataAccess;
 using JsonDataAccess.Context;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -14,8 +16,6 @@ builder.Services.AddServerSideBlazor().AddHubOptions((options => {
     options.MaximumReceiveMessageSize = 1000 * 1024 * 1024;
 } ));
 builder.Services.AddScoped<JsonContext>();
-builder.Services.AddScoped<IUserDAO, JsonUserDAO>();
-builder.Services.AddScoped<IPostDAO, JsonPostDAO>();
 builder.Services.AddScoped<AuthenticationStateProvider, SimpleAuthenticationStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthServiceImpl>();
 
@@ -23,6 +23,10 @@ builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<TooltipService>();
 builder.Services.AddScoped<ContextMenuService>();
+builder.Services.AddScoped<IPostService, PostServiceImp>();
+builder.Services.AddScoped<IUserService, UserServiceImp>();
+builder.Services.AddScoped<IPostDAO, JsonPostDAO>();
+builder.Services.AddScoped<IUserDAO, JsonUserDAO>();
 
 // builder.Services.AddAuthorization(options =>
 // {

@@ -5,7 +5,8 @@
 @using Microsoft.AspNetCore.Components
 @using System.ComponentModel.DataAnnotations
 @using System.Security.Claims
-@inject IUserDAO userDao
+@using Contracts
+@inject IUserService userService
 @inject NavigationManager NavMgr
 
 
@@ -129,7 +130,7 @@
     private async Task Submit(User arg) {
         try {
             User newUser = new User(FName, LName, Email, Pwd, Image);
-            await ((LoogedIn) ? userDao.UpdateUserAsync(newUser) : userDao.AddUserAsync(newUser));
+            await ((LoogedIn) ? userService.UpdateUserAsync(newUser) : userService.AddUserAsync(newUser));
         }
         catch (Exception e)
         {

@@ -2,16 +2,15 @@ using Application.Contracts;
 using Entities.Model;
 using JsonDataAccess.Context;
 
-namespace JsonDataAccess; 
+namespace JsonDataAccess;
 
-public class JsonPostDAO : IPostDAO{
-    
-    private JsonContext jsonContext;
+public class JsonPostDAO : IPostDAO {
+    private readonly JsonContext jsonContext;
 
     public JsonPostDAO(JsonContext jsonContext) {
         this.jsonContext = new JsonContext();
     }
-    
+
     public async Task<ICollection<Post>> GetAllPostAsync() {
         return jsonContext.Forum.Posts;
     }
@@ -26,13 +25,14 @@ public class JsonPostDAO : IPostDAO{
         return jsonContext.Forum.Posts.FirstOrDefault(p => UID.Equals(p.UID))!;
     }
 
-    public async Task<Post> AddComent(string UID, Comment comment) {
-        Post? post = GetPost(UID).Result;
+    public async Task<Post> AddComment(string UID, Comment comment) {
+        var post = GetPost(UID).Result;
         if (post != null) {
             Console.WriteLine("To aca");
             post.Comments.Add(comment);
             await jsonContext.SaveChangesAsync();
         }
+
         return null;
     }
 }

@@ -1,7 +1,8 @@
 @page "/Users"
 @using Application.Contracts
+@using Contracts
 @using Entities.Model
-@inject IUserDAO UserDao
+@inject IUserService userSevice
 <h3>Users</h3>
 
 @if (users == null)
@@ -44,6 +45,6 @@ else
     private ICollection<User> users;
 
     protected override async Task OnInitializedAsync() {
-        users = await UserDao.GetUsersAsync();
+        users = await userSevice.GetUsersAsync();
     }
 }

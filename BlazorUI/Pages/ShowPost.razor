@@ -3,8 +3,11 @@
 @using Entities.Model
 @using Microsoft.AspNetCore.Components
 @using System.Security.Claims
-@inject IPostDAO postDao
+@using BlazorUI.Authentication
+@using Contracts
+@inject IPostService postService
 @inject NavigationManager navMgr
+@inject IAuthService authService
 
 
 <RadzenCard class="m-3">
@@ -18,9 +21,7 @@
                         <p>12</p>
                         <span class="oi oi-arrow-circle-bottom " aria-hidden="true"></span>
                     </div>
-            <RadzenHtmlEditor PlaceHolder="Text (optional)" @bind-Value=@Post.Body style="height: 500px; margin-bottom: 1rem;" Disabled="true" class="rz-html-editor">
-                <RadzenHtmlEditorRemoveFormat/>
-            </RadzenHtmlEditor>
+  <p>@(new MarkupString(Post.Body))</p>
         </div>
         <div class="col-6 last-column">
             <div class="photo-and-comments">
@@ -58,9 +59,9 @@
     private void Submit() {
         if (!this.comment.Equals("")) {
             Comment comment = new Comment(this.comment, myUser);
-            postDao.AddComent(postId, comment);
+            postService.AddComment(postId, comment);
             this.comment = "";
-            navMgr.NavigateTo($"/ShowPost/{postId}");
+            navMgr.NavigateTo($"/ShowPost/{postId}", true);
         }
     }
     
@@ -69,15 +70,9 @@
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal user = authState.User;
         isLoggedIn = user.Identity != null;
-        Post = await postDao.GetPost(postId);
+        Post = await postService.GetPost(postId);
         if (!isLoggedIn) return;
-        
-        myUser = new User(user.Identity.Name,
-            user.Claims.First(c => "lastName".Equals(c.Type)).Value,
-            user.Claims.First(c => "email".Equals(c.Type)).Value,
-            (user.Claims.First(c => "pwd".Equals(c.Type))).Value,
-            user.Claims.First(c => "photo".Equals(c.Type)).Value);
-        
-        
+
+        myUser = authService.MyUser;
     }
 }
