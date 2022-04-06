@@ -2,8 +2,13 @@
 
 <div class="container">
     <div class="main-box">
-        @foreach (var post in posts) {
-            <PostCard Post="post" />
+        @if (posts != null) { // change this hack urgent!
+            @foreach (var post in posts) {
+                <PostCard Post="post"/>
+            }
+        }
+        else {
+            <p>Loading...</p>
         }
     </div>
 </div>
@@ -11,7 +16,7 @@
 @code {
 
     [Parameter]
-    public IEnumerable<Post> posts { get; set; }
+    public IEnumerable<Post> posts { get; set; } = new List<Post>();
 
     protected override async Task OnInitializedAsync() {
         await base.OnInitializedAsync();

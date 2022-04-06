@@ -1,5 +1,4 @@
 @page "/ShowPost/{postId}"
-@using Application.Contracts
 @using Entities.Model
 @using Microsoft.AspNetCore.Components
 @using System.Security.Claims
@@ -9,40 +8,44 @@
 @inject NavigationManager navMgr
 @inject IAuthService authService
 
-
-<RadzenCard class="m-3">
-    <div class="row">
-        <div class="title">
-            <H2>@Post.Header</h2>
-        </div>
-        <div class="col-6 body col">
-                   <div class="c vote">
-                        <span class="oi oi-arrow-circle-top" aria-hidden="true"></span>  
-                        <p>12</p>
-                        <span class="oi oi-arrow-circle-bottom " aria-hidden="true"></span>
-                    </div>
-  <p>@(new MarkupString(Post.Body))</p>
-        </div>
-        <div class="col-6 last-column">
-            <div class="photo-and-comments">
-                @if (Post.Image != null) {
-                    <div class="photo-area">
-                        <img src=@Post.Image>
-                    </div>
-                }
-                <div class="comments-part ">
-                    @foreach (Comment comment in Post.Comments) {
-                        <CommentComponent Comment="comment"/>
-                    }
-                </div>
+@if (Post != null) {
+    <RadzenCard class="m-3">
+        <div class="row">
+            <div class="title">
+                <H2>@Post.Header</h2>
             </div>
+            <div class="col-6 body col">
+                <div class="c vote">
+                    <span class="oi oi-arrow-circle-top" aria-hidden="true"></span>
+                    <p>12</p>
+                    <span class="oi oi-arrow-circle-bottom " aria-hidden="true"></span>
+                </div>
+                <p>@(new MarkupString(Post.Body))</p>
+            </div>
+            <div class="col-6 last-column">
+                <div class="photo-and-comments">
+                    @if (Post.Image != null) {
+                        <div class="photo-area">
+                            <img src=@Post.Image>
+                        </div>
+                    }
+                    <div class="comments-part ">
+                        @foreach (Comment comment in Post.Comments) {
+                            <CommentComponent Comment="comment"/>
+                        }
+                    </div>
+                </div>
                 <div class="writing-area">
                     <RadzenTextArea Style="resize: none;" Placeholder="Enter your comment..." MaxLength="144" @bind-Value="comment" onKeyPress="" Class="w-100" Disabled=@(isLoggedIn ? false : true)/>
                     <RadzenButton class="submit" Text="Submit" Click="Submit" Disabled=@(isLoggedIn ? false : true)></RadzenButton>
                 </div>
             </div>
         </div>
-</RadzenCard>
+    </RadzenCard>
+}
+else {
+    <p>Loading...</p>
+}
 
 @code {
     public Post Post;

@@ -1,7 +1,6 @@
 @page "/CreatePost"
 @using Entities.Model
 @using System.Security.Claims
-@using Application.Contracts
 @using Microsoft.AspNetCore.Components
 @inject IPostService postService
 @inject NavigationManager navMgr
@@ -73,7 +72,7 @@
     
     async Task OnSend() {
         try {
-            Post post = new Post(getUID(),title, body, myUser, postImage, DateTime.Now, new List<Vote>(), new List<Comment>());
+            Post post = new Post(Guid.NewGuid().ToString(),title, body, myUser, postImage, DateTime.Now, new List<Vote>(), new List<Comment>());
             await postService.AddPost(post);
         }
         catch (Exception e) {
@@ -108,11 +107,4 @@
         //console.Log($"{args.Message}");
     }
     
-    private string getUID() { // Change this please
-        string tempUID = DateTimeOffset.Now.ToUnixTimeSeconds().ToString() + "&"; 
-        for (int i = 0; i < 6; i++) {
-            tempUID += new Random().Next(10);
-        }
-        return tempUID;
-    }
 }

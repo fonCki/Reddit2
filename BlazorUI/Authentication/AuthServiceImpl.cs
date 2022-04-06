@@ -1,6 +1,5 @@
 using System.Security.Claims;
 using System.Text.Json;
-using Application.Contracts;
 using Contracts;
 using Entities.Model;
 using Microsoft.JSInterop;

@@ -49,7 +49,7 @@ public class UserController : ControllerBase {
         }
     }
 
-    [HttpDelete]
+    [HttpPatch]
     public async Task<ActionResult<User>> UpdateUser([FromBody] User user) {
         try {
             User updated = await userService.UpdateUserAsync(user);

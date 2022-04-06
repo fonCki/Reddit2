@@ -1,12 +1,12 @@
 
-using Application;
-using Application.Contracts;
+
 using BlazorUI.Authentication;
 using Contracts;
-using JsonDataAccess;
-using JsonDataAccess.Context;
+
 using Microsoft.AspNetCore.Components.Authorization;
 using Radzen;
+using RESTClient.PostClients;
+using RESTClient.UsersClients;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +15,6 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor().AddHubOptions((options => {
     options.MaximumReceiveMessageSize = 1000 * 1024 * 1024;
 } ));
-builder.Services.AddScoped<JsonContext>();
 builder.Services.AddScoped<AuthenticationStateProvider, SimpleAuthenticationStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthServiceImpl>();
 
@@ -23,10 +22,8 @@ builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<TooltipService>();
 builder.Services.AddScoped<ContextMenuService>();
-builder.Services.AddScoped<IPostService, PostServiceImp>();
-builder.Services.AddScoped<IUserService, UserServiceImp>();
-builder.Services.AddScoped<IPostDAO, JsonPostDAO>();
-builder.Services.AddScoped<IUserDAO, JsonUserDAO>();
+builder.Services.AddScoped<IPostService, PostHttpClient>();
+builder.Services.AddScoped<IUserService, UsersHttpClient>();
 
 // builder.Services.AddAuthorization(options =>
 // {

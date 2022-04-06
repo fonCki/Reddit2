@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonDataAccess", "JsonDataA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{0B9D9EC9-FE0C-4F54-9FE4-63CBAD076F8F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTClient", "RESTClient\RESTClient.csproj", "{EA1C6B46-A610-4EDE-924F-44854D91707D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{0B9D9EC9-FE0C-4F54-9FE4-63CBAD076F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B9D9EC9-FE0C-4F54-9FE4-63CBAD076F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B9D9EC9-FE0C-4F54-9FE4-63CBAD076F8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA1C6B46-A610-4EDE-924F-44854D91707D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA1C6B46-A610-4EDE-924F-44854D91707D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA1C6B46-A610-4EDE-924F-44854D91707D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA1C6B46-A610-4EDE-924F-44854D91707D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
