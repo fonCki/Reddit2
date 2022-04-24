@@ -15,6 +15,7 @@ public class PostServiceImp : IPostService {
 
     public Task<ICollection<Post>> GetAllPostAsync() {
         return postDao.GetAllPostAsync();
+        
     }
 
     public Task<Post> AddPost(Post post) {

@@ -11,11 +11,11 @@ public class Post {
     public ICollection<Comment> Comments { get; set; }
     
     public Post(string uid, string header, string body, User writtenBy, string image, DateTime dateTime, ICollection<Vote> votes, ICollection<Comment> comments) {
-        UID = uid;
-        Header = header;
-        Body = body;
+        UID = uid?? "";
+        Header = header?? "";
+        Body = body?? "";
         WrittenBy = writtenBy;
-        Image = image;
+        Image = image ?? "";
         DateTime = dateTime;
         Votes = votes;
         Comments = comments;

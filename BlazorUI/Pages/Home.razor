@@ -7,7 +7,6 @@
 
 @code {
     public IEnumerable<Post> posts;
-    byte[] documentContent;
     protected override async Task OnInitializedAsync() {
         posts = await postService.GetAllPostAsync();
         await base.OnInitializedAsync();

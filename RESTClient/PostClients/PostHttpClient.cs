@@ -27,6 +27,7 @@ public class PostHttpClient : IPostService {
         using HttpClient client = new();
 
         string postToJson = JsonSerializer.Serialize(post);
+        
         StringContent content = new(postToJson, Encoding.UTF8, "application/json");
 
         HttpResponseMessage response = await client.PostAsync("https://localhost:7266/Posts", content);

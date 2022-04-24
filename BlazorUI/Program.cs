@@ -15,7 +15,11 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor().AddHubOptions((options => {
     options.MaximumReceiveMessageSize = 1000 * 1024 * 1024;
 } ));
-builder.Services.AddScoped<AuthenticationStateProvider, SimpleAuthenticationStateProvider>();
+
+builder.Services.AddScoped<SimpleAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<SimpleAuthenticationStateProvider>());
+
+//builder.Services.AddScoped<AuthenticationStateProvider, SimpleAuthenticationStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthServiceImpl>();
 
 builder.Services.AddScoped<DialogService>();

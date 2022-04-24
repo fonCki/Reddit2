@@ -3,7 +3,6 @@
 @using Entities.Model
 
 @inject NavigationManager navMgr
-@inject IAuthService authService
 @inject IPostService postService
 
 <div class="container one" >
@@ -80,8 +79,5 @@
     void OnChange(object value, string name) {
         navMgr.NavigateTo($"SearchResults/{(string)value}");
     }
-
-    void doIt() {
-        Console.WriteLine(SearchValue);
-    }
+    
 }

@@ -116,7 +116,7 @@
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal user = authState.User;
         if (user.Identity == null) return;;
-        
+
         FName = user.Identity!.Name!;
         LName = user.Claims.First(c => "lastName".Equals(c.Type)).Value;
         Email = user.Claims.First(c => "email".Equals(c.Type)).Value;
