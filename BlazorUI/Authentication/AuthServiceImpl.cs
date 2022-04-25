@@ -42,7 +42,7 @@ public class AuthServiceImpl : IAuthService {
 
     public async Task<ClaimsPrincipal> GetAuthAsync() // this method is called by the authentication framework, whenever user credentials are reguired
     {
-        User? user =  await GetUserFromCacheAsync(); // retrieve cached user, if any
+        MyUser =  await GetUserFromCacheAsync(); // retrieve cached user, if any
 
         ClaimsPrincipal principal = CreateClaimsPrincipal(MyUser); // create ClaimsPrincipal
 
