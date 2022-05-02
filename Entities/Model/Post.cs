@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Entities.Model;
 
 public class Post {
-    public String UID { get; private set; }
+    [Key]
+    public String Uid { get; set; }
     public string Header { get; set; }
     public string Body { get; set; }
     public User WrittenBy { get; set; }
@@ -9,9 +12,11 @@ public class Post {
     public DateTime DateTime { get; }
     public ICollection<Vote> Votes { get; set; }
     public ICollection<Comment> Comments { get; set; }
-    
+
+    public Post() { }
+
     public Post(string uid, string header, string body, User writtenBy, string image, DateTime dateTime, ICollection<Vote> votes, ICollection<Comment> comments) {
-        UID = uid?? "";
+        Uid = uid?? "";
         Header = header?? "";
         Body = body?? "";
         WrittenBy = writtenBy;

@@ -1,8 +1,8 @@
 using Application;
 using Application.Contracts;
 using Contracts;
-using JsonDataAccess;
-using JsonDataAccess.Context;
+using EFCDataAccess;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,11 +13,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<JsonContext>();
+builder.Services.AddScoped<ForumContextClass>();
 builder.Services.AddScoped<IPostService, PostServiceImp>();
 builder.Services.AddScoped<IUserService, UserServiceImp>();
-builder.Services.AddScoped<IPostDAO, JsonPostDAO>();
-builder.Services.AddScoped<IUserDAO, JsonUserDAO>();
+builder.Services.AddScoped<IPostDAO, EfcPostDao>();
+builder.Services.AddScoped<IUserDAO, EfcUserDao>();
 
 
 var app = builder.Build();

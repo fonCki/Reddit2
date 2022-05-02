@@ -24,25 +24,28 @@ public class PostHttpClient : IPostService {
     }
 
     public async Task<Post> AddPost(Post post) {
+
         using HttpClient client = new();
 
         string postToJson = JsonSerializer.Serialize(post);
+        Console.WriteLine(postToJson);
         
         StringContent content = new(postToJson, Encoding.UTF8, "application/json");
-
+        Console.WriteLine(post.Uid);
+        
         HttpResponseMessage response = await client.PostAsync("https://localhost:7266/Posts", content);
         string responseContent = await response.Content.ReadAsStringAsync();
-
+        
         if (!response.IsSuccessStatusCode) {
             throw new Exception($"Error: {response.StatusCode}, {responseContent}");
         }
-
+        
         Post returned = JsonSerializer.Deserialize<Post>(responseContent, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         })!;
         
-        return returned;
+        return null;
     }
 
     public async Task<Post> GetPost(string UID) {

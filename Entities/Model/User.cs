@@ -25,6 +25,7 @@ public class User {
 
     public string LastName { get; set; }
 
+    [Key]
     public string Email { get; set; }
 
     public string Password { get; set; }

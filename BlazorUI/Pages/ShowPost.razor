@@ -30,8 +30,10 @@
                         </div>
                     }
                     <div class="comments-part ">
-                        @foreach (Comment comment in Post.Comments) {
-                            <CommentComponent Comment="comment"/>
+                        @if (Post.Comments != null) {
+                            @foreach (Comment comment in Post.Comments) {
+                                <CommentComponent Comment="comment"/>
+                            }
                         }
                     </div>
                 </div>

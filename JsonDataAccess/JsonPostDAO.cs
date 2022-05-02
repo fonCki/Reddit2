@@ -22,7 +22,7 @@ public class JsonPostDAO : IPostDAO {
     }
 
     public async Task<Post> GetPost(string UID) {
-        return jsonContext.Forum.Posts.FirstOrDefault(p => UID.Equals(p.UID))!;
+        return jsonContext.Forum.Posts.FirstOrDefault(p => UID.Equals(p.Uid))!;
     }
 
     public async Task<Post> AddComment(string UID, Comment comment) {
