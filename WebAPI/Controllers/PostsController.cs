@@ -39,8 +39,10 @@ public class PostsController : ControllerBase {
 
     [HttpPost]
     public async Task<ActionResult<Post>> AddPost([FromBody] Post post) {
+
         try {
             Post added = await postService.AddPost(post);
+            
             return Created("added", added);
         }
         catch (Exception e) {

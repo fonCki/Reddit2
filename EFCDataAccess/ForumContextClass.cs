@@ -21,6 +21,7 @@ public class ForumContextClass : DbContext {
     {
         modelBuilder.Entity<Post>().HasKey(todo => todo.Uid);
         modelBuilder.Entity<User>().HasKey(todo => todo.Email);
+        modelBuilder.Entity<Post>().Property(p => p.DateTime).HasColumnType("Date");
     }
 
 }

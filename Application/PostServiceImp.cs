@@ -26,7 +26,7 @@ public class PostServiceImp : IPostService {
         return postDao.GetPost(UID);
     }
 
-    public Task<Post> AddComment(string UID, Comment comment) {
-        return postDao.AddComment(UID, comment);
+    public Task<Post> AddComment(Comment comment) {
+        return postDao.AddComment(comment);
     }
 }

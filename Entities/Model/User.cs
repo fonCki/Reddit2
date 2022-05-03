@@ -1,17 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace Entities.Model;
 
 public class User {
-     public User() { }
-
-    public User(string email, string password)
-    {
-        Email = email;
-        Password = password;
-    }
-
+    
+    [JsonConstructor] public User() { }
+     
     public User(string fName, string lastName, string email, string password, string imgPath) {
         FirstName = fName;
         LastName = lastName;

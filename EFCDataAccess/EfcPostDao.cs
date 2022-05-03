@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Application.Contracts;
 using Entities.Model;
 using Microsoft.EntityFrameworkCore;
@@ -38,9 +39,17 @@ public class EfcPostDao : IPostDAO  {
         return post;
     }
 
-    public async Task<Post> AddComment(string UID, Comment comment) {
-        Post? post = await context.FindAsync<Post>(UID);
-        post.Comments.Add(comment);
+    public Task<Post> AddComment(string UID, Comment comment) {
+        throw new NotImplementedException();
+    }
+
+    public async Task<Post> AddComment(Comment comment) {
+        User? writtenBy = context.Users.Find(comment.WrittenBy.Email);
+        if (writtenBy != null) {
+            comment.WrittenBy = writtenBy;
+        }
+
+        context.Comments.Add(comment);
         try {
             await context.SaveChangesAsync();
         }
@@ -49,6 +58,6 @@ public class EfcPostDao : IPostDAO  {
             throw;
         }
 
-        return await GetPost(UID);
+        return await GetPost(comment.PostUid);
     }
 }

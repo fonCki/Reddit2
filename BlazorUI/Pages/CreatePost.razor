@@ -72,7 +72,7 @@
     
     async Task OnSend() {
         try {
-            Post post = new Post(Guid.NewGuid().ToString(),title, body, myUser, postImage, DateTime.Now, new List<Vote>(), new List<Comment>());
+            Post post = new Post(title, body, myUser, postImage);
             await postService.AddPost(post);
         }
         catch (Exception e) {

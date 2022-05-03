@@ -25,10 +25,9 @@ public class JsonPostDAO : IPostDAO {
         return jsonContext.Forum.Posts.FirstOrDefault(p => UID.Equals(p.Uid))!;
     }
 
-    public async Task<Post> AddComment(string UID, Comment comment) {
-        var post = GetPost(UID).Result;
+    public async Task<Post> AddComment(Comment comment) {
+        var post = GetPost(comment.PostUid).Result;
         if (post != null) {
-            Console.WriteLine("To aca");
             post.Comments.Add(comment);
             await jsonContext.SaveChangesAsync();
         }

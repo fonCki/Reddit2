@@ -52,6 +52,7 @@ namespace EFCDataAccess.Migrations
                     Body = table.Column<string>(type: "TEXT", nullable: false),
                     WrittenByEmail = table.Column<string>(type: "TEXT", nullable: false),
                     Image = table.Column<string>(type: "TEXT", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "Date", nullable: false),
                     ForumContainerId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
@@ -74,20 +75,14 @@ namespace EFCDataAccess.Migrations
                 name: "Comments",
                 columns: table => new
                 {
-                    CID = table.Column<string>(type: "TEXT", nullable: false),
+                    CID = table.Column<Guid>(type: "TEXT", nullable: false),
                     Body = table.Column<string>(type: "TEXT", nullable: false),
-                    ParentCommentCID = table.Column<string>(type: "TEXT", nullable: true),
                     WrittenByEmail = table.Column<string>(type: "TEXT", nullable: false),
                     PostUid = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.CID);
-                    table.ForeignKey(
-                        name: "FK_Comments_Comments_ParentCommentCID",
-                        column: x => x.ParentCommentCID,
-                        principalTable: "Comments",
-                        principalColumn: "CID");
                     table.ForeignKey(
                         name: "FK_Comments_Posts_PostUid",
                         column: x => x.PostUid,
@@ -108,7 +103,7 @@ namespace EFCDataAccess.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Value = table.Column<short>(type: "INTEGER", nullable: false),
                     VoterEmail = table.Column<string>(type: "TEXT", nullable: true),
-                    CommentCID = table.Column<string>(type: "TEXT", nullable: true),
+                    CommentCID = table.Column<Guid>(type: "TEXT", nullable: true),
                     PostUid = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
@@ -130,11 +125,6 @@ namespace EFCDataAccess.Migrations
                         principalTable: "Users",
                         principalColumn: "Email");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_ParentCommentCID",
-                table: "Comments",
-                column: "ParentCommentCID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostUid",

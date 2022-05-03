@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCDataAccess.Migrations
 {
     [DbContext(typeof(ForumContextClass))]
-    [Migration("20220502123039_InitialCreate")]
+    [Migration("20220503035722_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -22,14 +22,12 @@ namespace EFCDataAccess.Migrations
 
             modelBuilder.Entity("Entities.Model.Comment", b =>
                 {
-                    b.Property<string>("CID")
+                    b.Property<Guid>("CID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ParentCommentCID")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PostUid")
@@ -40,8 +38,6 @@ namespace EFCDataAccess.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("CID");
-
-                    b.HasIndex("ParentCommentCID");
 
                     b.HasIndex("PostUid");
 
@@ -69,6 +65,9 @@ namespace EFCDataAccess.Migrations
                     b.Property<string>("Body")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("Date");
 
                     b.Property<Guid?>("ForumContainerId")
                         .HasColumnType("TEXT");
@@ -131,7 +130,7 @@ namespace EFCDataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CommentCID")
+                    b.Property<Guid?>("CommentCID")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PostUid")
@@ -156,10 +155,6 @@ namespace EFCDataAccess.Migrations
 
             modelBuilder.Entity("Entities.Model.Comment", b =>
                 {
-                    b.HasOne("Entities.Model.Comment", "ParentComment")
-                        .WithMany()
-                        .HasForeignKey("ParentCommentCID");
-
                     b.HasOne("Entities.Model.Post", null)
                         .WithMany("Comments")
                         .HasForeignKey("PostUid");
@@ -169,8 +164,6 @@ namespace EFCDataAccess.Migrations
                         .HasForeignKey("WrittenByEmail")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ParentComment");
 
                     b.Navigation("WrittenBy");
                 });

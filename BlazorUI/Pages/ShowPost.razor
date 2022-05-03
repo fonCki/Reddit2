@@ -30,11 +30,15 @@
                         </div>
                     }
                     <div class="comments-part ">
-                        @if (Post.Comments != null) {
+                        @if (Post.Comments != null) { //TODO change this hack
                             @foreach (Comment comment in Post.Comments) {
                                 <CommentComponent Comment="comment"/>
                             }
                         }
+                        else {
+                            <p>hack</p>
+                        }
+
                     </div>
                 </div>
                 <div class="writing-area">
@@ -63,8 +67,9 @@ else {
     
     private void Submit() {
         if (!this.comment.Equals("")) {
-            Comment comment = new Comment(this.comment, myUser);
-            postService.AddComment(postId, comment);
+            Comment comment = new Comment(this.comment, myUser, Post.Uid);
+            postService.AddComment(comment);
+            Console.WriteLine(comment);
             this.comment = "";
             navMgr.NavigateTo($"/ShowPost/{postId}", true);
         }

@@ -28,7 +28,8 @@ public class PostHttpClient : IPostService {
         using HttpClient client = new();
 
         string postToJson = JsonSerializer.Serialize(post);
-        Console.WriteLine(postToJson);
+        Console.WriteLine(post);
+        Console.WriteLine(postToJson + "Estoy aca"); //TODO
         
         StringContent content = new(postToJson, Encoding.UTF8, "application/json");
         Console.WriteLine(post.Uid);
@@ -65,13 +66,20 @@ public class PostHttpClient : IPostService {
         return post;
     }
 
-    public async Task<Post> AddComment(string UID, Comment comment) {
+    public async Task<Post> AddComment(Comment comment) {
         using HttpClient client = new();
 
         string postToJson = JsonSerializer.Serialize(comment);
-        StringContent content = new(postToJson, Encoding.UTF8, "application/json");
 
-        HttpResponseMessage response = await client.PostAsync($"https://localhost:7266/Posts/{UID}/Comments", content);
+
+
+        StringContent content = new(postToJson, Encoding.UTF8, "application/json");
+        
+        Console.WriteLine("From Json" + postToJson + " Desde Json"); // TODO delete
+
+ 
+
+        HttpResponseMessage response = await client.PostAsync($"https://localhost:7266/Posts/{comment.PostUid}/Comments", content);
         string responseContent = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode) {
